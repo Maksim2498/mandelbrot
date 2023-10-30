@@ -11,7 +11,7 @@ import { TAB_SIZE  } from "ts/const"
     control:  do|while
     id:       [_A-Za-z][_A-Za-z0-9]*
     boo:      true|false
-    number:   (\d+(\.\d+)?|\.\d+)i?(?![_A-Za-z])
+    number:   (\d+(\.\d+)?|\.\d+)([eE]\d+)?i?(?![_A-Za-z])
     sep:      \n|;|,|$
     op:       +|-|*|/|^|=|+=|-=|*=|/=|^=|<|<=|>|>=|==|!=|!|&|\|
     paren:    \(|\)
@@ -21,7 +21,7 @@ export type TokenizationResult         = [...t.Token[], t.EOT]
 export type ReadonlyTokenizationResult = DeepReadonly<TokenizationResult>
 
 export default class Tokenizer {
-    private static readonly _NUMBER_REGEX     = /^(\d+(\.\d+)?|\.\d+)i?(?![_A-Za-z])/
+    private static readonly _NUMBER_REGEX     = /^(\d+(\.\d+)?|\.\d+)([eE]\d+)?i?(?![_A-Za-z])/
     private static readonly _ID_REGEX         = /^[_A-Za-z][_A-Za-z0-9]*/
     private static readonly _BLANK_LINE_REGEX = /^[\u0009 ]*\n?/
 
