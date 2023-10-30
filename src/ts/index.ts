@@ -190,7 +190,7 @@ try {
         function predefToOptionElement(predef: Predef, index: number): HTMLOptionElement {
             const option = document.createElement("option")
 
-            option.innerHTML = `${index}. ${predef.name}`
+            option.innerHTML = `${index + 1}. ${predef.name}`
             option.value     = index.toString()
 
             return option

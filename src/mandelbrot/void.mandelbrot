@@ -1,11 +1,11 @@
-z       =  COORD
-power1  =  4
-power2  =  2
-coef1   =  1
-coef2   = -2
-seed    =  0
-zold    =  0
-bailout =  0.00001
+z       = COORD
+power1  = 4
+power2  = 2
+coef1   = complex(1)
+coef2   = complex(-2)
+seed    = complex(0)
+zold    = complex(0)
+bailout = 0.00001
 
 do
 	fz  = coef1*z^power1 + coef2*z^power2 - 1
