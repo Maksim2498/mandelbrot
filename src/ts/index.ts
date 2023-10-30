@@ -30,7 +30,7 @@ const PREDEFS: Predef[] = [
         code: targetCode,
     },
     {
-        name: "flower",
+        name: "Flower",
         code: flowerCode,
     },
     {

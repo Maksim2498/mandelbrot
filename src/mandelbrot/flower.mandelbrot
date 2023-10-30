@@ -1,10 +1,10 @@
-z        = COORD
-seed     = complex(0)
-zcoef    = complex(1)
-exponent = 10
-bailout  = 4
+z       = COORD
+exp     = 10
+seed    = complex(0)
+zCoef   = complex(1)
+bailout = 4
 
 do
-	z = z^exponent + zcoef*z + seed
+	z = z^exp + zCoef*z + seed
 while
 	mod(z) <= bailout

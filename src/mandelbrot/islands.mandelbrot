@@ -1,10 +1,10 @@
-bailout =  1.0e20
-z       =  COORD
-newz    =  complex(0)
-y       =  complex(0)
-seed    =  complex(0.56667)
-power1  =  2
-power2  =  0
+bailout = 1.0e20
+z       = COORD
+newz    = complex(0)
+y       = complex(0)
+seed    = complex(0.56667)
+power1  = 2
+power2  = 0
 induct  = complex(-0.5)
 
 do
