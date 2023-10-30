@@ -1,0 +1,15 @@
+bailout =  1.0e20
+z       =  COORD
+newz    =  complex(0)
+y       =  complex(0)
+seed    =  0.56667
+power1  =  2
+power2  =  0
+induct  = -0.5
+
+do
+	newz = z^power1 + z^power2*seed + induct*y
+	y    = z
+	z    = newz
+while
+	mod(z) < bailout

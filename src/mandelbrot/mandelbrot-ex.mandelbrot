@@ -1,0 +1,11 @@
+C       = COORD
+apwr    = 2
+zpwr    = 2
+bailout = 4
+z       = complex(0)
+
+do
+	a = z^apwr + C
+	z = a^zpwr + C
+while
+	mod(z) <= bailout

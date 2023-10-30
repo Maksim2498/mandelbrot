@@ -1,4 +1,9 @@
-import defaultCode               from "mandelbrot/default.mandelbrot"
+import flowerCode                from "mandelbrot/flower.mandelbrot"
+import mandelbrotExCode          from "mandelbrot/mandelbrot-ex.mandelbrot"
+import mandelbrotCode            from "mandelbrot/mandelbrot.mandelbrot"
+import targetCode                from "mandelbrot/target.mandelbrot"
+import voidCode                  from "mandelbrot/void.mandelbrot"
+import islandsCode               from "mandelbrot/islands.mandelbrot"
 import Renderer                  from "./render/Renderer"
 
 import { forceGetElementById,
@@ -6,10 +11,43 @@ import { forceGetElementById,
 
 import "css/index.css"
 
+interface Predef {
+    name: string
+    code: string
+}
+
+const PREDEFS: Predef[] = [
+    {
+        name: "Mandelbrot",
+        code: mandelbrotCode,
+    },
+    {
+        name: "Mandelbrot-Ex",
+        code: mandelbrotExCode,
+    },
+    {
+        name: "Target",
+        code: targetCode,
+    },
+    {
+        name: "flower",
+        code: flowerCode,
+    },
+    {
+        name: "Void",
+        code: voidCode,
+    },
+    {
+        name: "Islands",
+        code: islandsCode,
+    }
+]
+
 try {
     const canvasContainerDiv        = forceGetElementById("canvas-container")             as HTMLDivElement
     const mainCanvas                = forceGetElementById("main-canvas")                  as HTMLCanvasElement
     const debugCanvas               = forceGetElementById("debug-canvas")                 as HTMLCanvasElement
+    const predefSelect              = forceGetElementById("predef-select")                as HTMLSelectElement
     const codeTextArea              = forceGetElementById("code-text-area")               as HTMLTextAreaElement
     const iterCountInput            = forceGetElementById("max-iters-input")              as HTMLInputElement
     const xInput                    = forceGetElementById("x-input")                      as HTMLInputElement
@@ -33,12 +71,14 @@ try {
 
     const renderer = new Renderer(mainCanvas, debugCanvas)
 
-
     renderer.autoRedraw = true
     renderer.autoResize = true
 
 
-    codeTextArea.value = defaultCode
+    initInPredefSelect()
+
+    predefSelect.onchange = onPredefChange
+    onPredefChange()
 
 
     codeTextArea.oninput              = onCodeChange
@@ -138,6 +178,33 @@ try {
         scaleInput.value  = renderer.scale.toString()
     }
 
+    function initInPredefSelect() {
+        for (const option of PREDEFS.map(predefToOptionElement))
+            predefSelect.appendChild(option)
+
+        if (PREDEFS.length > 0)
+            predefSelect.selectedIndex = 0
+
+        return
+
+        function predefToOptionElement(predef: Predef, index: number): HTMLOptionElement {
+            const option = document.createElement("option")
+
+            option.innerHTML = `${index}. ${predef.name}`
+            option.value     = index.toString()
+
+            return option
+        }
+    }
+
+    function onPredefChange() {
+        const id     = Number(predefSelect.value)
+        const predef = PREDEFS[id]
+
+        codeTextArea.value = predef.code
+
+        onCodeChange()
+    }
 
     function onCodeChange() {
         if (autocompileInput.checked)

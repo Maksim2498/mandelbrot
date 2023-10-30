@@ -22,6 +22,7 @@ main {
 }
 
 label,
+select,
 summary {
     font-weight: bold
 }
@@ -38,6 +39,7 @@ details,
 button,
 input,
 textarea,
+select,
 .error {
     width: 100%;
     padding: .5rem;
@@ -51,6 +53,7 @@ input[type="color"] {
 
 button,
 details,
+select,
 .checkbox-input,
 .input {
     margin-top: 1rem

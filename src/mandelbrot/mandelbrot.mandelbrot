@@ -1,4 +1,4 @@
-z       = 0 + 0i
+z       = complex(0)
 bailout = 2
 
 do

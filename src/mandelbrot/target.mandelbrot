@@ -1,0 +1,8 @@
+C       = COORD
+z       = C
+bailout = 4
+
+do
+	z -= (z^4 * C - z + C) / (4 * z^3 * C)
+while
+	mod(z) <= bailout
