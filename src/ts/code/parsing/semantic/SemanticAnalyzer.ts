@@ -272,7 +272,7 @@ export default class SemanticAnalyzer {
         let [lhs, rhs] = op.args.map(argSyntax => {
             let arg = this._analyzeExpr(argSyntax)
 
-            if (!type.isNumeric(arg.type))
+            if (!type.isNumeric(arg.type) || type.isComplex(arg.type))
                 this._cannotBeAnArg(op.group, arg.type, argSyntax)
 
             if (type.isBool(arg.type))
