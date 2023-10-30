@@ -34,11 +34,11 @@ const PREDEFS: Predef[] = [
         code: flowerCode,
     },
     {
-        name: "Void",
+        name: "Void (WIP)",
         code: voidCode,
     },
     {
-        name: "Islands",
+        name: "Islands (WIP)",
         code: islandsCode,
     }
 ]
