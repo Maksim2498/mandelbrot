@@ -1,0 +1,7 @@
+z       = 0 + 0i
+bailout = 2
+
+do
+    z = z^2 + COORD
+while
+    mod(z) <= bailout

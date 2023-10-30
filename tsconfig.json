@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        /* Projects */
+        "incremental": true,
+
+        /* Language and Environment */
+        "target": "esnext",
+
+        /* Modules */
+        "module": "commonjs",
+        "rootDir": "./",
+        "baseUrl": "./src/",
+        "typeRoots": [
+            "./node_modules/@types",
+            "./src/ts/type"
+        ],
+
+        /* JavaScript Support */
+
+        /* Emit */
+        "outDir": "./dist/",
+        "sourceMap": true,
+
+        /* Interop Constraints */
+        "isolatedModules": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+
+        /* Type Checking */
+        "strict": true,
+
+        /* Completeness */
+        "skipDefaultLibCheck": true,
+        "skipLibCheck": true
+    }
+}
