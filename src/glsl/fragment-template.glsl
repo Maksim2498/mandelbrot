@@ -20,8 +20,6 @@ varying vec2  v_pos;
 {{functions}}
 
 void main() {
-    u_millis;
-
     vec2 z  = vec2(0, 0);
     vec2 uv = v_pos;
 

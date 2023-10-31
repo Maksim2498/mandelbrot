@@ -47,7 +47,7 @@ export default class Renderer {
     private _scaleUniformLocation!:                WebGLUniformLocation
     private _angleUniformLocation!:                WebGLUniformLocation
     private _aspectRatioUniformLocation!:          WebGLUniformLocation
-    private _millisUniformLocation!:               WebGLUniformLocation
+    private _millisUniformLocation!:               WebGLUniformLocation     | null
 
     private _2d:                                   CanvasRenderingContext2D | null = null
     private _fpsFrameCount:                        number                          = 60
@@ -463,20 +463,24 @@ export default class Renderer {
     }
 
     private _initProgramUniformLocations() {
-        this._setColorUniformLocation             = this._getUniformLocation("u_setColor"            )
-        this._backgroundStartColorUniformLocation = this._getUniformLocation("u_backgroundStartColor")
-        this._backgroundEndColorUniformLocation   = this._getUniformLocation("u_backgroundEndColor"  )
-        this._posUniformLocation                  = this._getUniformLocation("u_pos"                 )
-        this._scaleUniformLocation                = this._getUniformLocation("u_scale"               )
-        this._angleUniformLocation                = this._getUniformLocation("u_angle"               )
-        this._aspectRatioUniformLocation          = this._getUniformLocation("u_aspectRatio"         )
-        this._millisUniformLocation               = this._getUniformLocation("u_millis"              )
+        this._setColorUniformLocation             = this._getUniformLocation("u_setColor"                   )
+        this._backgroundStartColorUniformLocation = this._getUniformLocation("u_backgroundStartColor"       )
+        this._backgroundEndColorUniformLocation   = this._getUniformLocation("u_backgroundEndColor"         )
+        this._posUniformLocation                  = this._getUniformLocation("u_pos"                        )
+        this._scaleUniformLocation                = this._getUniformLocation("u_scale"                      )
+        this._angleUniformLocation                = this._getUniformLocation("u_angle"                      )
+        this._aspectRatioUniformLocation          = this._getUniformLocation("u_aspectRatio"                )
+        this._millisUniformLocation               = this._getUniformLocation("u_millis",               false)
     }
 
-    private _getUniformLocation(name: string): WebGLUniformLocation {
+    private _getUniformLocation(name: string                   ): WebGLUniformLocation
+    private _getUniformLocation(name: string, required: true   ): WebGLUniformLocation
+    private _getUniformLocation(name: string, required: boolean): WebGLUniformLocation | null
+
+    private _getUniformLocation(name: string, required: boolean = true): WebGLUniformLocation | null {
         const location = this._gl.getUniformLocation(this._program!, name)
 
-        if (location == null)
+        if (location == null && required)
             throw new UniformNotFoundError(name)
 
         return location
@@ -599,7 +603,9 @@ export default class Renderer {
         this._gl.uniform1f(this._scaleUniformLocation,                this.scale                   )
         this._gl.uniform1f(this._angleUniformLocation,                degreesToRadians(this.angle) )
         this._gl.uniform1f(this._aspectRatioUniformLocation,          this.aspectRatio             )
-        this._gl.uniform1f(this._millisUniformLocation,               performance.now()            )
+
+        if (this._millisUniformLocation != null)
+            this._gl.uniform1f(this._millisUniformLocation, performance.now())
     }
 
     private _renderFractalRect() {
