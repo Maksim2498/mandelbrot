@@ -1,0 +1,12 @@
+z          =  COORD
+seconds    =  MILLIS / 1000
+sinSeconds =  sin(seconds)
+exp        =  int(10 * sinSeconds)
+seed       =  0
+zCoef      = +sinSeconds
+bailout    =  4
+
+do
+	z = z^exp + zCoef*z + seed
+while
+	mod(z) <= bailout

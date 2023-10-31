@@ -1,4 +1,5 @@
 import flowerCode                from "mandelbrot/flower.mandelbrot"
+import animatedFlowerCode        from "mandelbrot/animated-flower.mandelbrot"
 import generalizedMandelbrotCode from "mandelbrot/generalized-mandelbrot.mandelbrot"
 import mandelbrotCode            from "mandelbrot/mandelbrot.mandelbrot"
 import targetCode                from "mandelbrot/target.mandelbrot"
@@ -39,6 +40,10 @@ const PREDEFS: Predef[] = [
     {
         name: "Flower",
         code: flowerCode,
+    },
+    {
+        name: "Flower (Animated)",
+        code: animatedFlowerCode,
     },
     {
         name: "Void (WIP)",
