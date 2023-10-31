@@ -152,7 +152,7 @@ try {
     codeTextArea.onkeydown = event => onTabKeyDown(event, codeTextArea)
 
     debugCanvas.onmousemove = event => {
-        if (event.buttons !== 1) // Left mouse button
+        if ((event.buttons & 1) === 0) // Primary (usually left) mouse button
             return
 
         const dx = -2 * event.movementX / renderer.mainCanvas.clientWidth  / renderer.scale * renderer.aspectRatio
@@ -166,6 +166,13 @@ try {
 
         xInput.value = newX.toString()
         yInput.value = newY.toString()
+
+        document.body.style.cursor = "grabbing"
+    }
+
+    onmouseup = event => {
+        if (event.button === 0) // No buttons pressed
+            document.body.style.cursor = "default"
     }
 
     debugCanvas.onwheel = event => {
