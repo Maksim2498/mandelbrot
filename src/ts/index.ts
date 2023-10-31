@@ -59,6 +59,7 @@ try {
     const backgroundEndColorInput   = forceGetElementById("background-end-color-input")   as HTMLInputElement
     const resolutionScaleInput      = forceGetElementById("resolution-scale-input")       as HTMLInputElement
     const useRealPixelSizeInput     = forceGetElementById("use-real-pixel-size-input")    as HTMLInputElement
+    const showResolutionInput       = forceGetElementById("show-resolution-input")        as HTMLInputElement
     const showFPSInput              = forceGetElementById("show-fps-input")               as HTMLInputElement
     const logTokensInput            = forceGetElementById("log-tokens-input")             as HTMLInputElement
     const logSyntaxTreeInput        = forceGetElementById("log-syntax-tree-input")        as HTMLInputElement
@@ -95,6 +96,7 @@ try {
     backgroundEndColorInput.oninput   = () => onColorChange("backgroundEndColor",   backgroundEndColorInput  )
 
     useRealPixelSizeInput.oninput     = () => onBoolChange("useRealPixelSize", useRealPixelSizeInput)
+    showResolutionInput.oninput       = () => onBoolChange("showResolution",   showResolutionInput  )
     showFPSInput.oninput              = () => onBoolChange("showFPS",          showFPSInput         )
 
     logTokensInput.oninput            = () => onParserBoolChange("logTokens",       logTokensInput      )
@@ -124,6 +126,7 @@ try {
         backgroundEndColorInput,
 
         useRealPixelSizeInput,
+        showResolutionInput,
         showFPSInput,
         logTokensInput,
         logSyntaxTreeInput,
@@ -243,7 +246,7 @@ try {
     }
 
     function onBoolChange(
-        keyName: "useRealPixelSize" | "showFPS",
+        keyName: "useRealPixelSize" | "showResolution" | "showFPS",
         element: HTMLInputElement,
     ) {
         renderer[keyName] = element.checked

@@ -16,8 +16,10 @@ import { stringToColor,
          areColorsEqual   } from "./Color"
 
 export default class Renderer {
-    compiler = new Compiler()
-    showFPS  = false
+    compiler       = new Compiler()
+    showFPS        = false
+    showResolution = false
+    margin         = 16
 
     private _x:                                    number                          = 0
     private _y:                                    number                          = 0
@@ -237,11 +239,11 @@ export default class Renderer {
     }
 
     get renderWidth(): number {
-        return this.effectiveResolutionScale * this._gl.drawingBufferWidth
+        return this._gl.drawingBufferWidth
     }
 
     get renderHeight(): number {
-        return this.effectiveResolutionScale * this._gl.drawingBufferHeight
+        return this._gl.drawingBufferHeight
     }
 
     get effectiveResolutionScale(): number {
@@ -614,6 +616,9 @@ export default class Renderer {
 
         this._clearDebugInfo()
 
+        if (this.showResolution)
+            this._renderResolution()
+
         if (this.showFPS)
             this._renderFPS()
     }
@@ -622,11 +627,32 @@ export default class Renderer {
         this._2d!.clearRect(0, 0, this._2d!.canvas.width, this._2d!.canvas.height)
     }
 
-    private _renderFPS() {
-        const fps    = this.minFPS.toFixed(0)
-        const margin = 16
+    private _renderResolution() {
+        const width      = this.renderWidth.toFixed(0)
+        const height     = this.renderHeight.toFixed(0)
+        const resolution = `${width}x${height}`
+        const x          = this.debugCanvas!.width - this.margin
+        const y          = this.margin
 
-        this._2d!.fillText(fps, margin, margin)
-        this._2d!.strokeText(fps, margin, margin)
+
+        this._2d!.save()
+        this._2d!.textAlign = "right"
+
+        this._renderDebugText(resolution, x, y)
+
+        this._2d!.restore()
+    }
+
+    private _renderFPS() {
+        const fps = this.minFPS.toFixed(0)
+        const x   = this.margin
+        const y   = this.margin
+
+        this._renderDebugText(fps, x, y)
+    }
+
+    private _renderDebugText(text: string, x: number, y: number) {
+        this._2d!.fillText(text, x, y)
+        this._2d!.strokeText(text, x, x)
     }
 }
