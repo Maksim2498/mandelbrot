@@ -1,9 +1,10 @@
-C       = COORD
-z       = C
-seconds = MILLIS / 1000
-exp     = int(30 * sin(seconds))
-density = 3 + sin(seconds)
-bailout = 4
+C          = COORD
+z          = C
+seconds    = MILLIS / 1000
+sinSeconds = sin(seconds)
+exp        = int(30 * sinSeconds)
+density    = 3 + sinSeconds
+bailout    = 4
 
 do
 	z -= (z^exp * C - z + C) / (density * z^(exp - 1) * C)
