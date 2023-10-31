@@ -15,12 +15,16 @@ import { onTabKeyDown,
 
 import "css/index.css"
 
+
 interface Predef {
     name: string
     code: string
 }
 
-const PREDEFS: Predef[] = [
+interface ReadonlyPredef extends Readonly<Predef> {}
+
+
+const PREDEFS: readonly ReadonlyPredef[] = [
     {
         name: "Mandelbrot",
         code: mandelbrotCode,
@@ -54,6 +58,7 @@ const PREDEFS: Predef[] = [
         code: islandsCode,
     }
 ]
+
 
 try {
     const canvasContainerDiv        = forceGetElementById("canvas-container"            ) as HTMLDivElement
