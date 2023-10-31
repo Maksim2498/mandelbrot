@@ -1,5 +1,6 @@
 # Make sure to disable lazy
 # rendering in advanced options
+# to see animation in realtime
 
 z          =  COORD
 seconds    =  MILLIS / 1000

@@ -1,5 +1,6 @@
 # Make sure to disable lazy
 # rendering in advanced options
+# to see animation in realtime
 
 C          = COORD
 z          = C
