@@ -195,6 +195,8 @@ try {
         renderer.y       += deltaY
 
         scaleInput.value  = renderer.scale.toString()
+        xInput.value      = renderer.x.toString()
+        yInput.value      = renderer.y.toString()
     }
 
     function initInPredefSelect() {
