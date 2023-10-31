@@ -93,6 +93,7 @@
                 <div class="input">
                     <label for="set-color-input">Set Color</label>
                     <input id="set-color-input"
+                           placeholder="HEX color"
                            type="color"
                            value="#FFFFFF"
                            autocomplete="off">
@@ -102,6 +103,7 @@
                     <div class="input">
                         <label for="background-start-color-input">Background Start Color</label>
                         <input id="background-start-color-input"
+                               placeholder="HEX color"
                                type="color"
                                value="#FF00FF"
                                autocomplete="off">
@@ -110,6 +112,7 @@
                     <div class="input">
                         <label for="background-end-color-input">Background End Color</label>
                         <input id="background-end-color-input"
+                               placeholder="HEX color"
                                type="color"
                                value="#000000"
                                autocomplete="off">
@@ -120,12 +123,24 @@
                     <summary>Advanced</summary>
 
                     <div class="input">
+                        <label for="scale-sensitivity-input">Scale Sensitivity</label>
+                        <input id="scale-sensitivity-input"
+                                type="number"
+                                autocomplete="off"
+                                min="0"
+                                value="1"
+                                step="0.1"
+                                placeholder="number">
+                    </div>
+
+                    <div class="input">
                         <label for="resolution-scale-input">Resolution Scale</label>
                         <input id="resolution-scale-input"
                                 type="number"
                                 autocomplete="off"
                                 min="0"
                                 value="1"
+                                step="0.1"
                                 placeholder="number">
                     </div>
 

@@ -6,7 +6,9 @@ import voidCode                  from "mandelbrot/void.mandelbrot"
 import islandsCode               from "mandelbrot/islands.mandelbrot"
 import Renderer                  from "./render/Renderer"
 
-import { forceGetElementById,
+import { onTabKeyDown,
+         onNumberChange,
+         forceGetElementById,
          addError, clearErrors } from "./util/dom"
 
 import "css/index.css"
@@ -57,6 +59,7 @@ try {
     const setColorInput             = forceGetElementById("set-color-input")              as HTMLInputElement
     const backgroundStartColorInput = forceGetElementById("background-start-color-input") as HTMLInputElement
     const backgroundEndColorInput   = forceGetElementById("background-end-color-input")   as HTMLInputElement
+    const scaleSensitivityInput     = forceGetElementById("scale-sensitivity-input")      as HTMLInputElement
     const resolutionScaleInput      = forceGetElementById("resolution-scale-input")       as HTMLInputElement
     const useRealPixelSizeInput     = forceGetElementById("use-real-pixel-size-input")    as HTMLInputElement
     const showResolutionInput       = forceGetElementById("show-resolution-input")        as HTMLInputElement
@@ -76,6 +79,12 @@ try {
     renderer.autoResize = true
 
 
+    let scaleSensitivity = 1
+
+    scaleSensitivityInput.oninput = onScaleSensitivityChange
+    onScaleSensitivityChange()
+
+
     initInPredefSelect()
 
     predefSelect.onchange = onPredefChange
@@ -84,20 +93,20 @@ try {
 
     codeTextArea.oninput              = onCodeChange
 
-    iterCountInput.oninput            = () => onNumberChange("maxIters",        iterCountInput      )
-    xInput.oninput                    = () => onNumberChange("x",               xInput              )
-    yInput.oninput                    = () => onNumberChange("y",               yInput              )
-    scaleInput.oninput                = () => onNumberChange("scale",           scaleInput          )
-    angleInput.oninput                = () => onNumberChange("angle",           angleInput          )
-    resolutionScaleInput.oninput      = () => onNumberChange("resolutionScale", resolutionScaleInput)
+    iterCountInput.oninput            = () => onRendererNumberChange("maxIters",        iterCountInput      )
+    xInput.oninput                    = () => onRendererNumberChange("x",               xInput              )
+    yInput.oninput                    = () => onRendererNumberChange("y",               yInput              )
+    scaleInput.oninput                = () => onRendererNumberChange("scale",           scaleInput          )
+    angleInput.oninput                = () => onRendererNumberChange("angle",           angleInput          )
+    resolutionScaleInput.oninput      = () => onRendererNumberChange("resolutionScale", resolutionScaleInput)
 
-    setColorInput.oninput             = () => onColorChange("setColor",             setColorInput            )
-    backgroundStartColorInput.oninput = () => onColorChange("backgroundStartColor", backgroundStartColorInput)
-    backgroundEndColorInput.oninput   = () => onColorChange("backgroundEndColor",   backgroundEndColorInput  )
+    setColorInput.oninput             = () => onRendererColorChange("setColor",             setColorInput            )
+    backgroundStartColorInput.oninput = () => onRendererColorChange("backgroundStartColor", backgroundStartColorInput)
+    backgroundEndColorInput.oninput   = () => onRendererColorChange("backgroundEndColor",   backgroundEndColorInput  )
 
-    useRealPixelSizeInput.oninput     = () => onBoolChange("useRealPixelSize", useRealPixelSizeInput)
-    showResolutionInput.oninput       = () => onBoolChange("showResolution",   showResolutionInput  )
-    showFPSInput.oninput              = () => onBoolChange("showFPS",          showFPSInput         )
+    useRealPixelSizeInput.oninput     = () => onRendererBoolChange("useRealPixelSize", useRealPixelSizeInput)
+    showResolutionInput.oninput       = () => onRendererBoolChange("showResolution",   showResolutionInput  )
+    showFPSInput.oninput              = () => onRendererBoolChange("showFPS",          showFPSInput         )
 
     logTokensInput.oninput            = () => onParserBoolChange("logTokens",       logTokensInput      )
     logSyntaxTreeInput.oninput        = () => onParserBoolChange("logSyntaxTree",   logSyntaxTreeInput  )
@@ -125,6 +134,7 @@ try {
         backgroundStartColorInput,
         backgroundEndColorInput,
 
+        scaleSensitivityInput,
         useRealPixelSizeInput,
         showResolutionInput,
         showFPSInput,
@@ -139,32 +149,14 @@ try {
         input.dispatchEvent(new Event("input"))
 
 
-    codeTextArea.onkeydown = function(e) {
-        if (e.key !== "Tab")
+    codeTextArea.onkeydown = event => onTabKeyDown(event, codeTextArea)
+
+    debugCanvas.onmousemove = event => {
+        if (event.buttons !== 1) // Left mouse button
             return
 
-        e.preventDefault()
-
-        const start = codeTextArea.selectionStart
-        const end   = codeTextArea.selectionEnd
-        const value = codeTextArea.value
-
-        codeTextArea.value = value.substring(0, start) +
-                             "\t"                      +
-                             value.substring(end)
-
-        codeTextArea.selectionStart = codeTextArea.selectionEnd
-                                    = start + 1
-
-        codeTextArea.dispatchEvent(new Event("input"))
-    }
-
-    debugCanvas.onmousemove = e => {
-        if (e.buttons !== 1) // Left mouse button
-            return
-
-        const dx = -2 * e.movementX / renderer.mainCanvas.clientWidth  / renderer.scale * renderer.aspectRatio
-        const dy =  2 * e.movementY / renderer.mainCanvas.clientHeight / renderer.scale
+        const dx = -2 * event.movementX / renderer.mainCanvas.clientWidth  / renderer.scale * renderer.aspectRatio
+        const dy =  2 * event.movementY / renderer.mainCanvas.clientHeight / renderer.scale
 
         const newX = renderer.x + dx
         const newY = renderer.y + dy
@@ -176,8 +168,8 @@ try {
         yInput.value = newY.toString()
     }
 
-    debugCanvas.onwheel = e => {
-        renderer.scale   *= Math.pow(.99, e.deltaY)
+    debugCanvas.onwheel = event => {
+        renderer.scale   *= Math.pow(.99, scaleSensitivity * event.deltaY)
         scaleInput.value  = renderer.scale.toString()
     }
 
@@ -209,43 +201,30 @@ try {
         onCodeChange()
     }
 
+    function onScaleSensitivityChange() {
+        onNumberChange(scaleSensitivityInput, number => scaleSensitivity = number)
+    }
+
     function onCodeChange() {
         if (autocompileInput.checked)
             onCompile()
     }
 
-    function onNumberChange(
+    function onRendererNumberChange(
         keyName: "maxIters" | "x" | "y" | "scale" | "angle" | "resolutionScale",
         element: HTMLInputElement,
     ) {
-        clearErrors(element)
-
-        try {
-            const value = Number(element.value)
-
-            if (Number.isNaN(value))
-                throw new Error("Not a number")
-
-            if (element.min && value < Number(element.min))
-                throw new Error(`Too small.\nMinimum allowed value is ${element.min}`)
-
-            if (element.max && value < Number(element.max))
-                throw new Error(`Too small.\nMinimum allowed value is ${element.max}`)
-
-            renderer[keyName] = value
-        } catch (error) {
-            addError(error, element)
-        }
+        onNumberChange(element, number => renderer[keyName] = number)
     }
 
-    function onColorChange(
+    function onRendererColorChange(
         keyName: "setColor" | "backgroundStartColor" | "backgroundEndColor",
         element: HTMLInputElement,
     ) {
         renderer[keyName] = element.value
     }
 
-    function onBoolChange(
+    function onRendererBoolChange(
         keyName: "useRealPixelSize" | "showResolution" | "showFPS",
         element: HTMLInputElement,
     ) {
