@@ -130,6 +130,7 @@ try {
 
     compileButton.onclick             = onCompile
     fullscreenButton.onclick          = onFullscreen
+    canvasContainerDiv.onkeydown      = onFullscreenKeyDown
 
 
     const inputs = [
@@ -289,6 +290,11 @@ try {
         } catch (error) {
             addError(error, codeTextArea)
         }
+    }
+
+    function onFullscreenKeyDown(event: KeyboardEvent) {
+        if (event.key === "F" || event.key === "f")
+            onFullscreen()
     }
 
     function onFullscreen() {
