@@ -21,9 +21,9 @@ export type TokenizationResult         = [...t.Token[], t.EOT]
 export type ReadonlyTokenizationResult = DeepReadonly<TokenizationResult>
 
 export default class Tokenizer {
-    private static readonly _NUMBER_REGEX     = /^(\d+(\.\d+)?|\.\d+)([eE]\d+)?i?(?![_A-Za-z])/
-    private static readonly _ID_REGEX         = /^[_A-Za-z][_A-Za-z0-9]*/
-    private static readonly _BLANK_LINE_REGEX = /^[\u0009 ]*\n?/
+    private static readonly _NUMBER_REGEX = /^(\d+(\.\d+)?|\.\d+)([eE]\d+)?i?(?![_A-Za-z])/
+    private static readonly _ID_REGEX     = /^[_A-Za-z][_A-Za-z0-9]*/
+    private static readonly _BLANK_REGEX  = /^[\u0009 ]*(#.*)?\n?/
 
     tokenize(code: string): TokenizationResult {
         const tokens         = new Array<t.Token>()
@@ -33,7 +33,7 @@ export default class Tokenizer {
 
         for (let pos = 0; pos < code.length;) {
             const match = code.substring(pos)
-                              .match(Tokenizer._BLANK_LINE_REGEX)![0]
+                              .match(Tokenizer._BLANK_REGEX)![0]
 
             const length = match.length
             
