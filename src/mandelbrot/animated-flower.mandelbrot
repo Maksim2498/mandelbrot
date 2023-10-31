@@ -1,3 +1,6 @@
+# Make sure to disable lazy
+# rendering in advanced options
+
 z          =  COORD
 seconds    =  MILLIS / 1000
 sinSeconds =  sin(seconds)
