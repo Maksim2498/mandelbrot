@@ -7,13 +7,13 @@ import ProgramCreationError   from "./error/program/ProgramCreationError"
 import ProgramLinkError       from "./error/program/ProgramLinkError"
 import ShaderCompilationError from "./error/shader/ShaderCompilationError"
 import ShaderCreationError    from "./error/shader/ShaderCreationError"
-import UniformNotFoundError   from "./error/uniform/UniformNotFoundError"
-import ReadonlyColor          from "./Color"
+import UniformNotFoundError from "./error/uniform/UniformNotFoundError"
+import ReadonlyColor        from "./Color"
 
-import { degreesToRadians   } from "ts/util/math"
+import { degreesToRadians } from "ts/util/math"
 import { stringToColor,
          colorToString,
-         areColorsEqual     } from "./Color"
+         areColorsEqual   } from "./Color"
 
 export default class Renderer {
     compiler = new Compiler()
@@ -46,6 +46,9 @@ export default class Renderer {
     private _aspectRatioUniformLocation!:          WebGLUniformLocation
 
     private _2d:                                   CanvasRenderingContext2D | null = null
+    private _fpsFrameCount:                        number                          = 60
+    private _fpsBuffer:                            number[]                        = new Array(this._fpsFrameCount)
+    private _fpsBufferIndex:                       number                          = 0
 
     private _autoRedraw:                           boolean                         = false
     private _autoResize:                           boolean                         = false
@@ -70,6 +73,30 @@ export default class Renderer {
         this._initWebGLContext()
         this._init2DContext()
         this._resize()
+    }
+
+    get minFPS(): number {
+        return this._fpsBuffer.reduce((lhs, rhs) => Math.min(lhs, rhs))
+    }
+
+    get maxFPS(): number {
+        return this._fpsBuffer.reduce((lhs, rhs) => Math.max(lhs, rhs))
+    }
+
+    get fps(): number {
+        return this._fpsBuffer.reduce((lhs, rhs) => lhs + rhs) / this._fpsBuffer.length
+    }
+
+    get fpsFrameCount(): number {
+        return this._fpsFrameCount
+    }
+
+    set fpsFrameCount(value: number) {
+        if (value === this._fpsFrameCount)
+            return
+
+        this._fpsFrameCount = value
+        this._fpsBuffer     = new Array(value)
     }
 
     get code(): string {
@@ -302,8 +329,9 @@ export default class Renderer {
     }
 
     render(dt: number = 0) {
+        this._updateFPSBuffer(dt)
         this._renderFractal()
-        this._renderDebugInfo(dt)
+        this._renderDebugInfo()
     }
 
     close() {
@@ -543,6 +571,11 @@ export default class Renderer {
         this._2d!.textBaseline = "top"
     }
 
+    private _updateFPSBuffer(dt: number) {
+        this._fpsBuffer[this._fpsBufferIndex] = 1_000 / dt
+        this._fpsBufferIndex                  = (this._fpsBufferIndex + 1) % this._fpsBuffer.length
+    }
+
     private _renderFractal() {
         if (!this._needRedraw)
             return
@@ -575,22 +608,22 @@ export default class Renderer {
         )
     }
 
-    private _renderDebugInfo(dt: number) {
+    private _renderDebugInfo() {
         if (this._2d == null)
             return
 
         this._clearDebugInfo()
 
         if (this.showFPS)
-            this._renderFPS(dt)
+            this._renderFPS()
     }
 
     private _clearDebugInfo() {
         this._2d!.clearRect(0, 0, this._2d!.canvas.width, this._2d!.canvas.height)
     }
 
-    private _renderFPS(dt: number) {
-        const fps    = Math.round(1_000 / dt).toFixed()
+    private _renderFPS() {
+        const fps    = this.minFPS.toFixed(0)
         const margin = 16
 
         this._2d!.fillText(fps, margin, margin)
