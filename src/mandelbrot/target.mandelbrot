@@ -1,8 +1,10 @@
 C       = COORD
 z       = C
+exp     = 6
+density = 2
 bailout = 4
 
 do
-	z -= (z^4 * C - z + C) / (4 * z^3 * C)
+	z -= (z^exp * C - z + C) / (density * z^(exp - 1) * C)
 while
 	mod(z) <= bailout
