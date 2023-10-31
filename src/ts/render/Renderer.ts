@@ -570,14 +570,6 @@ export default class Renderer {
 
         this.debugCanvas.width  = this.debugCanvas.clientWidth
         this.debugCanvas.height = this.debugCanvas.clientHeight
-
-        this._resetDebugCanvasState()
-    }
-
-    private _resetDebugCanvasState() {
-        this._2d!.fillStyle    = "red"
-        this._2d!.font         = "bold 32px sans-serif"
-        this._2d!.textBaseline = "top"
     }
 
     private _updateFPSBuffer(dt: number) {
@@ -638,31 +630,39 @@ export default class Renderer {
     }
 
     private _renderResolution() {
+        this._2d!.save()
+
+        this._2d!.fillStyle    = "red"
+        this._2d!.font         = "bold 32px sans-serif"
+        this._2d!.textBaseline = "top"
+
         const width      = this.renderWidth.toFixed(0)
         const height     = this.renderHeight.toFixed(0)
         const resolution = `${width}x${height}`
-        const x          = this.debugCanvas!.width - this.margin
+        const measure    = this._2d!.measureText(resolution)
+        const x          = this.debugCanvas!.width - this.margin - measure.width
         const y          = this.margin
 
-
-        this._2d!.save()
-        this._2d!.textAlign = "right"
-
-        this._renderDebugText(resolution, x, y)
+        this._2d!.fillText(resolution, x, y)
+        this._2d!.strokeText(resolution, x, y)
 
         this._2d!.restore()
     }
 
     private _renderFPS() {
+        this._2d!.save()
+
+        this._2d!.fillStyle    = "red"
+        this._2d!.font         = "bold 32px sans-serif"
+        this._2d!.textBaseline = "top"
+
         const fps = this.minFPS.toFixed(0)
         const x   = this.margin
         const y   = this.margin
 
-        this._renderDebugText(fps, x, y)
-    }
+        this._2d!.fillText(fps, x, y)
+        this._2d!.strokeText(fps, x, y)
 
-    private _renderDebugText(text: string, x: number, y: number) {
-        this._2d!.fillText(text, x, y)
-        this._2d!.strokeText(text, x, x)
+        this._2d!.restore()
     }
 }
