@@ -177,18 +177,18 @@ try {
 
     canvasContainerDiv.addEventListener("wheel", event => {
         const scaleFactor = Math.pow(.99, scaleSensitivity * event.deltaY)
-        const deltaScale  =  (1 - scaleFactor) / (renderer.scale * scaleFactor)
+        const oldScale    = renderer.scale
+        const newScale    = oldScale * scaleFactor
+        const deltaScale  =  (1 - scaleFactor) / newScale
 
         const deltaX      = -(2 * event.clientX / debugCanvas.width  - 1) * deltaScale * renderer.aspectRatio
         const deltaY      =  (2 * event.clientY / debugCanvas.height - 1) * deltaScale
 
-        renderer.scale   *= scaleFactor
-        renderer.x       += deltaX
-        renderer.y       += deltaY
+        const newX        = renderer.x + deltaX
+        const newY        = renderer.y + deltaY
 
-        scaleInput.value  = renderer.scale.toString()
-        xInput.value      = renderer.x.toString()
-        yInput.value      = renderer.y.toString()
+        setScale(newScale)
+        setPos(newX, newY)
     })
 
     type MouseActionState = "none" | "positioning" | "resizing-control-panel"
@@ -221,11 +221,7 @@ try {
         const newX = renderer.x + dx
         const newY = renderer.y + dy
 
-        renderer.x = newX
-        renderer.y = newY
-
-        xInput.value = newX.toString()
-        yInput.value = newY.toString()
+        setPos(newX, newY)
     })
 
     addEventListener("mousemove", event => {
@@ -360,11 +356,8 @@ try {
     }
 
     function zeroKeyDownEventHandler(event: KeyboardEvent) {
-        if (event.key !== "0")
-            return
-
-        xInput.value = (renderer.x = 0).toString()
-        yInput.value = (renderer.y = 0).toString()
+        if (event.key === "0")
+            setPos(0, 0)
     }
 
     function fullscreenKeyDownEventHandler(event: KeyboardEvent) {
@@ -388,6 +381,23 @@ try {
     function setControlPanelWidth(width: number) {
         controlPanelDiv.style.width    = `${width}px`
         canvasContainerDiv.style.width = `${(innerWidth - width)}px`
+    }
+
+    function setPos(x: number, y: number) {
+        setX(x)
+        setY(y)
+    }
+
+    function setX(x: number) {
+        xInput.value = (renderer.x = x).toString()
+    }
+
+    function setY(y: number) {
+        yInput.value = (renderer.y = y).toString()
+    }
+
+    function setScale(scale: number) {
+        scaleInput.value = (renderer.scale = scale).toString()
     }
 } catch (error) {
     console.error(error)
