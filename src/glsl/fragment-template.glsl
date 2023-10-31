@@ -13,12 +13,15 @@ uniform vec2  u_pos;
 uniform float u_scale;
 uniform float u_angle;
 uniform float u_aspectRatio;
+uniform float u_millis;
 
 varying vec2  v_pos;
 
 {{functions}}
 
 void main() {
+    u_millis;
+
     vec2 z  = vec2(0, 0);
     vec2 uv = v_pos;
 

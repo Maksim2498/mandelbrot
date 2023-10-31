@@ -2,9 +2,9 @@ import toBool     from "glsl/cast/toBool.glsl"
 import toInt      from "glsl/cast/toInt.glsl"
 import toFloat    from "glsl/cast/toFloat.glsl"
 import toComplex  from "glsl/cast/toComplex.glsl"
-import mulComplex from "glsl/op/mulComplex.glsl"
-import divComplex from "glsl/op/divComplex.glsl"
-import powComplex from "glsl/op/powComplex.glsl"
+import mulComplex from "glsl/complex/op/mulComplex.glsl"
+import divComplex from "glsl/complex/op/divComplex.glsl"
+import powComplex from "glsl/complex/op/powComplex.glsl"
 import getArg     from "glsl/complex/getArg.glsl"
 import getCon     from "glsl/complex/getCon.glsl"
 import getReal    from "glsl/complex/getReal.glsl"
@@ -154,6 +154,12 @@ export const COORD: def.ReadonlyBuiltinValue = def.makeBuiltinValue(
     type.COMPLEX,
     "COORD",
     "uv",
+)
+
+export const MILLIS: def.ReadonlyBuiltinValue = def.makeBuiltinValue(
+    type.FLOAT,
+    "MILLIS",
+    "u_millis",
 )
 
 export const PI: def.ReadonlyBuiltinValue = def.makeBuiltinValue(

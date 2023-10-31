@@ -20,6 +20,7 @@ export default class Renderer {
     showFPS        = false
     showResolution = false
     margin         = 16
+    lazy           = true
 
     private _x:                                    number                          = 0
     private _y:                                    number                          = 0
@@ -46,6 +47,7 @@ export default class Renderer {
     private _scaleUniformLocation!:                WebGLUniformLocation
     private _angleUniformLocation!:                WebGLUniformLocation
     private _aspectRatioUniformLocation!:          WebGLUniformLocation
+    private _millisUniformLocation!:               WebGLUniformLocation
 
     private _2d:                                   CanvasRenderingContext2D | null = null
     private _fpsFrameCount:                        number                          = 60
@@ -468,6 +470,7 @@ export default class Renderer {
         this._scaleUniformLocation                = this._getUniformLocation("u_scale"               )
         this._angleUniformLocation                = this._getUniformLocation("u_angle"               )
         this._aspectRatioUniformLocation          = this._getUniformLocation("u_aspectRatio"         )
+        this._millisUniformLocation               = this._getUniformLocation("u_millis"              )
     }
 
     private _getUniformLocation(name: string): WebGLUniformLocation {
@@ -579,7 +582,7 @@ export default class Renderer {
     }
 
     private _renderFractal() {
-        if (!this._needRedraw)
+        if (this.lazy && !this._needRedraw)
             return
 
         this._setupUniforms()
@@ -596,6 +599,7 @@ export default class Renderer {
         this._gl.uniform1f(this._scaleUniformLocation,                this.scale                   )
         this._gl.uniform1f(this._angleUniformLocation,                degreesToRadians(this.angle) )
         this._gl.uniform1f(this._aspectRatioUniformLocation,          this.aspectRatio             )
+        this._gl.uniform1f(this._millisUniformLocation,               performance.now()            )
     }
 
     private _renderFractalRect() {

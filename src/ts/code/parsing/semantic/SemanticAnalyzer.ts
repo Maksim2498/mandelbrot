@@ -38,6 +38,7 @@ export default class SemanticAnalyzer {
         bi.FLOAT,
         bi.INT,
         bi.COORD,
+        bi.MILLIS,
         bi.PI,
         bi.E,
     ]

@@ -1,7 +1,7 @@
 C       = COORD
 z       = C
-exp     = 6
-density = 2
+exp     = 4
+density = 3
 bailout = 4
 
 do

@@ -46,31 +46,32 @@ const PREDEFS: Predef[] = [
 ]
 
 try {
-    const canvasContainerDiv        = forceGetElementById("canvas-container")             as HTMLDivElement
-    const mainCanvas                = forceGetElementById("main-canvas")                  as HTMLCanvasElement
-    const debugCanvas               = forceGetElementById("debug-canvas")                 as HTMLCanvasElement
-    const predefSelect              = forceGetElementById("predef-select")                as HTMLSelectElement
-    const codeTextArea              = forceGetElementById("code-text-area")               as HTMLTextAreaElement
-    const iterCountInput            = forceGetElementById("max-iters-input")              as HTMLInputElement
-    const xInput                    = forceGetElementById("x-input")                      as HTMLInputElement
-    const yInput                    = forceGetElementById("y-input")                      as HTMLInputElement
-    const scaleInput                = forceGetElementById("scale-input")                  as HTMLInputElement
-    const angleInput                = forceGetElementById("angle-input")                  as HTMLInputElement
-    const setColorInput             = forceGetElementById("set-color-input")              as HTMLInputElement
+    const canvasContainerDiv        = forceGetElementById("canvas-container"            ) as HTMLDivElement
+    const mainCanvas                = forceGetElementById("main-canvas"                 ) as HTMLCanvasElement
+    const debugCanvas               = forceGetElementById("debug-canvas"                ) as HTMLCanvasElement
+    const predefSelect              = forceGetElementById("predef-select"               ) as HTMLSelectElement
+    const codeTextArea              = forceGetElementById("code-text-area"              ) as HTMLTextAreaElement
+    const iterCountInput            = forceGetElementById("max-iters-input"             ) as HTMLInputElement
+    const xInput                    = forceGetElementById("x-input"                     ) as HTMLInputElement
+    const yInput                    = forceGetElementById("y-input"                     ) as HTMLInputElement
+    const scaleInput                = forceGetElementById("scale-input"                 ) as HTMLInputElement
+    const angleInput                = forceGetElementById("angle-input"                 ) as HTMLInputElement
+    const setColorInput             = forceGetElementById("set-color-input"             ) as HTMLInputElement
     const backgroundStartColorInput = forceGetElementById("background-start-color-input") as HTMLInputElement
-    const backgroundEndColorInput   = forceGetElementById("background-end-color-input")   as HTMLInputElement
-    const scaleSensitivityInput     = forceGetElementById("scale-sensitivity-input")      as HTMLInputElement
-    const resolutionScaleInput      = forceGetElementById("resolution-scale-input")       as HTMLInputElement
-    const useRealPixelSizeInput     = forceGetElementById("use-real-pixel-size-input")    as HTMLInputElement
-    const showResolutionInput       = forceGetElementById("show-resolution-input")        as HTMLInputElement
-    const showFPSInput              = forceGetElementById("show-fps-input")               as HTMLInputElement
-    const logTokensInput            = forceGetElementById("log-tokens-input")             as HTMLInputElement
-    const logSyntaxTreeInput        = forceGetElementById("log-syntax-tree-input")        as HTMLInputElement
-    const logSemanticTreeInput      = forceGetElementById("log-semantic-tree-input")      as HTMLInputElement
-    const logGLSLCodeInput          = forceGetElementById("log-glsl-code-input")          as HTMLInputElement
-    const autocompileInput          = forceGetElementById("autocompile-input")            as HTMLInputElement
-    const compileButton             = forceGetElementById("compile-button")               as HTMLButtonElement
-    const fullscreenButton          = forceGetElementById("fullscreen-button")            as HTMLButtonElement
+    const backgroundEndColorInput   = forceGetElementById("background-end-color-input"  ) as HTMLInputElement
+    const scaleSensitivityInput     = forceGetElementById("scale-sensitivity-input"     ) as HTMLInputElement
+    const resolutionScaleInput      = forceGetElementById("resolution-scale-input"      ) as HTMLInputElement
+    const useRealPixelSizeInput     = forceGetElementById("use-real-pixel-size-input"   ) as HTMLInputElement
+    const showResolutionInput       = forceGetElementById("show-resolution-input"       ) as HTMLInputElement
+    const showFPSInput              = forceGetElementById("show-fps-input"              ) as HTMLInputElement
+    const logTokensInput            = forceGetElementById("log-tokens-input"            ) as HTMLInputElement
+    const logSyntaxTreeInput        = forceGetElementById("log-syntax-tree-input"       ) as HTMLInputElement
+    const logSemanticTreeInput      = forceGetElementById("log-semantic-tree-input"     ) as HTMLInputElement
+    const logGLSLCodeInput          = forceGetElementById("log-glsl-code-input"         ) as HTMLInputElement
+    const autocompileInput          = forceGetElementById("autocompile-input"           ) as HTMLInputElement
+    const lazyRenderingInput        = forceGetElementById("lazy-rendering-input"        ) as HTMLInputElement
+    const compileButton             = forceGetElementById("compile-button"              ) as HTMLButtonElement
+    const fullscreenButton          = forceGetElementById("fullscreen-button"           ) as HTMLButtonElement
 
 
     const renderer = new Renderer(mainCanvas, debugCanvas)
@@ -106,6 +107,7 @@ try {
 
     useRealPixelSizeInput.oninput     = () => onRendererBoolChange("useRealPixelSize", useRealPixelSizeInput)
     showResolutionInput.oninput       = () => onRendererBoolChange("showResolution",   showResolutionInput  )
+    lazyRenderingInput.oninput        = () => onRendererBoolChange("lazy",             lazyRenderingInput   )
     showFPSInput.oninput              = () => onRendererBoolChange("showFPS",          showFPSInput         )
 
     logTokensInput.oninput            = () => onParserBoolChange("logTokens",       logTokensInput      )
@@ -143,6 +145,7 @@ try {
         logSemanticTreeInput,
         logGLSLCodeInput,
         autocompileInput,
+        lazyRenderingInput,
     ]
 
     for (const input of inputs)
@@ -241,7 +244,7 @@ try {
     }
 
     function onRendererBoolChange(
-        keyName: "useRealPixelSize" | "showResolution" | "showFPS",
+        keyName: "useRealPixelSize" | "lazy" | "showResolution" | "showFPS",
         element: HTMLInputElement,
     ) {
         renderer[keyName] = element.checked
