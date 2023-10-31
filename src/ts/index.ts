@@ -101,7 +101,7 @@ try {
     onScaleSensitivityChange()
 
 
-    initInPredefSelect()
+    initPredefSelect()
 
     predefSelect.onchange = onPredefChange
     onPredefChange()
@@ -214,7 +214,7 @@ try {
         yInput.value      = renderer.y.toString()
     }
 
-    function initInPredefSelect() {
+    function initPredefSelect() {
         for (const option of PREDEFS.map(predefToOptionElement))
             predefSelect.appendChild(option)
 
