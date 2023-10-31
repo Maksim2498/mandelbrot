@@ -1,7 +1,7 @@
 z       = COORD
 exp     = 10
-seed    = complex(0)
-zCoef   = complex(1)
+seed    = 0
+zCoef   = 1
 bailout = 4
 
 do
