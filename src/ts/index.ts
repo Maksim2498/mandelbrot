@@ -1,5 +1,5 @@
 import flowerCode                from "mandelbrot/flower.mandelbrot"
-import mandelbrotExCode          from "mandelbrot/mandelbrot-ex.mandelbrot"
+import generalizedMandelbrotCode from "mandelbrot/generalized-mandelbrot.mandelbrot"
 import mandelbrotCode            from "mandelbrot/mandelbrot.mandelbrot"
 import targetCode                from "mandelbrot/target.mandelbrot"
 import animatedTargetCode        from "mandelbrot/animated-target.mandelbrot"
@@ -25,8 +25,8 @@ const PREDEFS: Predef[] = [
         code: mandelbrotCode,
     },
     {
-        name: "Mandelbrot-Ex",
-        code: mandelbrotExCode,
+        name: "Mandelbrot (Generalized)",
+        code: generalizedMandelbrotCode,
     },
     {
         name: "Target",
