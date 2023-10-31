@@ -1,20 +1,22 @@
-import flowerCode                from "mandelbrot/flower.mandelbrot"
-import animatedFlowerCode        from "mandelbrot/animated-flower.mandelbrot"
-import generalizedMandelbrotCode from "mandelbrot/generalized-mandelbrot.mandelbrot"
-import mandelbrotCode            from "mandelbrot/mandelbrot.mandelbrot"
-import targetCode                from "mandelbrot/target.mandelbrot"
-import animatedTargetCode        from "mandelbrot/animated-target.mandelbrot"
-import voidCode                  from "mandelbrot/void.mandelbrot"
-import islandsCode               from "mandelbrot/islands.mandelbrot"
-import Renderer                  from "./render/Renderer"
+import flowerCode                 from "mandelbrot/flower.mandelbrot"
+import animatedFlowerCode         from "mandelbrot/animated-flower.mandelbrot"
+import generalizedMandelbrotCode  from "mandelbrot/generalized-mandelbrot.mandelbrot"
+import mandelbrotCode             from "mandelbrot/mandelbrot.mandelbrot"
+import targetCode                 from "mandelbrot/target.mandelbrot"
+import animatedTargetCode         from "mandelbrot/animated-target.mandelbrot"
+import voidCode                   from "mandelbrot/void.mandelbrot"
+import islandsCode                from "mandelbrot/islands.mandelbrot"
+import Renderer                   from "./render/Renderer"
 
-import { onTabKeyDown,
-         onNumberChange,
+import { onNumberChange,
          forceGetElementById,
-         addError, clearErrors } from "./util/dom"
+         addError, clearErrors,
+         tabKeyDownEventHandler } from "./util/dom"
 
 import "css/index.css"
 
+
+type CursorState = "default" | "positioning" | "resizing-control-panel"
 
 interface Predef {
     name: string
@@ -64,6 +66,7 @@ try {
     const canvasContainerDiv        = forceGetElementById("canvas-container"            ) as HTMLDivElement
     const mainCanvas                = forceGetElementById("main-canvas"                 ) as HTMLCanvasElement
     const debugCanvas               = forceGetElementById("debug-canvas"                ) as HTMLCanvasElement
+    const controlPanelDiv           = forceGetElementById("control-panel"               ) as HTMLDivElement
     const predefSelect              = forceGetElementById("predef-select"               ) as HTMLSelectElement
     const codeTextArea              = forceGetElementById("code-text-area"              ) as HTMLTextAreaElement
     const iterCountInput            = forceGetElementById("max-iters-input"             ) as HTMLInputElement
@@ -97,49 +100,43 @@ try {
 
     let scaleSensitivity = 1
 
-    scaleSensitivityInput.oninput = onScaleSensitivityChange
+    scaleSensitivityInput.addEventListener("input", onScaleSensitivityChange)
     onScaleSensitivityChange()
 
 
     initPredefSelect()
-
-    predefSelect.onchange = onPredefChange
+    predefSelect.addEventListener("change", onPredefChange)
     onPredefChange()
 
 
-    codeTextArea.oninput              = onCodeChange
+    codeTextArea.addEventListener("input", onCodeChange)
 
-    iterCountInput.oninput            = () => onRendererNumberChange("maxIters",        iterCountInput      )
-    xInput.oninput                    = () => onRendererNumberChange("x",               xInput              )
-    yInput.oninput                    = () => onRendererNumberChange("y",               yInput              )
-    scaleInput.oninput                = () => onRendererNumberChange("scale",           scaleInput          )
-    angleInput.oninput                = () => onRendererNumberChange("angle",           angleInput          )
-    resolutionScaleInput.oninput      = () => onRendererNumberChange("resolutionScale", resolutionScaleInput)
+    iterCountInput.addEventListener("input", () => onRendererNumberChange("maxIters", iterCountInput))
+    xInput.addEventListener("input", () => onRendererNumberChange("x", xInput))
+    yInput.addEventListener("input", () => onRendererNumberChange("y", yInput))
+    scaleInput.addEventListener("input", () => onRendererNumberChange("scale", scaleInput))
+    angleInput.addEventListener("input", () => onRendererNumberChange("angle", angleInput))
+    resolutionScaleInput.addEventListener("input", () => onRendererNumberChange("resolutionScale", resolutionScaleInput))
 
-    setColorInput.oninput             = () => onRendererColorChange("setColor",             setColorInput            )
-    backgroundStartColorInput.oninput = () => onRendererColorChange("backgroundStartColor", backgroundStartColorInput)
-    backgroundEndColorInput.oninput   = () => onRendererColorChange("backgroundEndColor",   backgroundEndColorInput  )
+    setColorInput.addEventListener("input", () => onRendererColorChange("setColor", setColorInput))
+    backgroundStartColorInput.addEventListener("input", () => onRendererColorChange("backgroundStartColor", backgroundStartColorInput))
+    backgroundEndColorInput.addEventListener("input", () => onRendererColorChange("backgroundEndColor", backgroundEndColorInput))
 
-    useRealPixelSizeInput.oninput     = () => onRendererBoolChange("useRealPixelSize", useRealPixelSizeInput)
-    showResolutionInput.oninput       = () => onRendererBoolChange("showResolution",   showResolutionInput  )
-    lazyRenderingInput.oninput        = () => onRendererBoolChange("lazy",             lazyRenderingInput   )
-    showFPSInput.oninput              = () => onRendererBoolChange("showFPS",          showFPSInput         )
+    useRealPixelSizeInput.addEventListener("input", () => onRendererBoolChange("useRealPixelSize", useRealPixelSizeInput))
+    showResolutionInput.addEventListener("input", () => onRendererBoolChange("showResolution", showResolutionInput))
+    lazyRenderingInput.addEventListener("input", () => onRendererBoolChange("lazy", lazyRenderingInput))
+    showFPSInput.addEventListener("input", () => onRendererBoolChange("showFPS", showFPSInput))
 
-    logTokensInput.oninput            = () => onParserBoolChange("logTokens",       logTokensInput      )
-    logSyntaxTreeInput.oninput        = () => onParserBoolChange("logSyntaxTree",   logSyntaxTreeInput  )
-    logSemanticTreeInput.oninput      = () => onParserBoolChange("logSemanticTree", logSemanticTreeInput)
+    logTokensInput.addEventListener("input", () => onParserBoolChange("logTokens", logTokensInput))
+    logSyntaxTreeInput.addEventListener("input", () => onParserBoolChange("logSyntaxTree", logSyntaxTreeInput))
+    logSemanticTreeInput.addEventListener("input", () => onParserBoolChange("logSemanticTree", logSemanticTreeInput))
 
-    logGLSLCodeInput.oninput          = () => onCompilerBoolChange("logCode", logGLSLCodeInput)
+    logGLSLCodeInput.addEventListener("input", () => onCompilerBoolChange("logCode", logGLSLCodeInput))
 
-    autocompileInput.oninput          = onAutocompileChange
+    autocompileInput.addEventListener("input", onAutocompileChange)
 
-    compileButton.onclick             = onCompile
-    fullscreenButton.onclick          = onFullscreen
-
-    canvasContainerDiv.onkeydown      = event => {
-        onZeroKeyDown(event)
-        onFullscreenKeyDown(event)
-    }
+    compileButton.addEventListener("click", onCompile)
+    fullscreenButton.addEventListener("click", onFullscreen)
 
 
     const inputs = [
@@ -172,33 +169,13 @@ try {
         input.dispatchEvent(new Event("input"))
 
 
-    codeTextArea.onkeydown = event => onTabKeyDown(event, codeTextArea)
+    codeTextArea.addEventListener("keydown", tabKeyDownEventHandler)
+    
 
-    debugCanvas.onmousemove = event => {
-        if ((event.buttons & 1) === 0) // Primary (usually left) mouse button
-            return
+    canvasContainerDiv.addEventListener("keydown", zeroKeyDownEventHandler)
+    canvasContainerDiv.addEventListener("keydown", fullscreenKeyDownEventHandler)
 
-        const dx = -2 * event.movementX / renderer.mainCanvas.clientWidth  / renderer.scale * renderer.aspectRatio
-        const dy =  2 * event.movementY / renderer.mainCanvas.clientHeight / renderer.scale
-
-        const newX = renderer.x + dx
-        const newY = renderer.y + dy
-
-        renderer.x = newX
-        renderer.y = newY
-
-        xInput.value = newX.toString()
-        yInput.value = newY.toString()
-
-        document.body.style.cursor = "grabbing"
-    }
-
-    onmouseup = event => {
-        if (event.button === 0) // No buttons pressed
-            document.body.style.cursor = "default"
-    }
-
-    debugCanvas.onwheel = event => {
+    canvasContainerDiv.addEventListener("wheel", event => {
         const scaleFactor = Math.pow(.99, scaleSensitivity * event.deltaY)
         const deltaScale  =  (1 - scaleFactor) / (renderer.scale * scaleFactor)
 
@@ -212,7 +189,88 @@ try {
         scaleInput.value  = renderer.scale.toString()
         xInput.value      = renderer.x.toString()
         yInput.value      = renderer.y.toString()
-    }
+    })
+
+    type MouseActionState = "none" | "positioning" | "resizing-control-panel"
+
+    let mouseActionState          = "none" as MouseActionState
+    let readyToResizeControlPanel = false
+
+    canvasContainerDiv.addEventListener("mousedown", event => {
+        if (readyToResizeControlPanel)
+            return
+
+        if (mouseActionState !== "none")
+            return
+
+        // Primary (usually left) mouse button isn't pressed
+        if ((event.buttons & 1) === 0)
+            return
+
+        mouseActionState           = "positioning"
+        document.body.style.cursor = "grabbing"
+    })
+
+    canvasContainerDiv.addEventListener("mousemove", event => {
+        if (mouseActionState !== "positioning")
+            return
+
+        const dx = -2 * event.movementX / renderer.mainCanvas.clientWidth  / renderer.scale * renderer.aspectRatio
+        const dy =  2 * event.movementY / renderer.mainCanvas.clientHeight / renderer.scale
+
+        const newX = renderer.x + dx
+        const newY = renderer.y + dy
+
+        renderer.x = newX
+        renderer.y = newY
+
+        xInput.value = newX.toString()
+        yInput.value = newY.toString()
+    })
+
+    addEventListener("mousemove", event => {
+        if (mouseActionState === "resizing-control-panel") {
+            raiseControlPanelWidth(controlPanelDiv.offsetLeft - event.clientX)
+            return
+        }
+
+        const activeDistance = 5
+
+        readyToResizeControlPanel = Math.abs(event.clientX - controlPanelDiv.offsetLeft) < activeDistance
+
+        if (mouseActionState !== "none")
+            return
+
+        document.body.style.cursor = readyToResizeControlPanel ? "col-resize"
+                                                               : "default"
+    })
+
+    addEventListener("mousedown", event => {
+        if (!readyToResizeControlPanel)
+            return
+
+        if (mouseActionState !== "none")
+            return
+
+        // Primary (usually left) mouse button isn't pressed
+        if ((event.buttons & 1) === 0)
+            return
+
+        mouseActionState           = "resizing-control-panel"
+        document.body.style.cursor = "col-resize"
+    })
+
+    addEventListener("mouseup", event => {
+        // Some mouse button is pressed
+        if (event.button !== 0) 
+            return
+
+        mouseActionState = "none"
+
+        document.body.style.cursor = readyToResizeControlPanel ? "col-resize"
+                                                               : "default"
+    })
+
 
     function initPredefSelect() {
         for (const option of PREDEFS.map(predefToOptionElement))
@@ -301,7 +359,7 @@ try {
         }
     }
 
-    function onZeroKeyDown(event: KeyboardEvent) {
+    function zeroKeyDownEventHandler(event: KeyboardEvent) {
         if (event.key !== "0")
             return
 
@@ -309,7 +367,7 @@ try {
         yInput.value = (renderer.y = 0).toString()
     }
 
-    function onFullscreenKeyDown(event: KeyboardEvent) {
+    function fullscreenKeyDownEventHandler(event: KeyboardEvent) {
         if (event.key === "F" || event.key === "f")
             onFullscreen()
     }
@@ -320,6 +378,17 @@ try {
         else
             document.exitFullscreen()
     }
+
+    function raiseControlPanelWidth(widthDelta: number) {
+        const newWidth = controlPanelDiv.clientWidth + widthDelta
+
+        setControlPanelWidth(newWidth)
+    }
+
+    function setControlPanelWidth(width: number) {
+        controlPanelDiv.style.width    = `${width}px`
+        canvasContainerDiv.style.width = `${(innerWidth - width)}px`
+    }
 } catch (error) {
     console.error(error)
-}
+} //

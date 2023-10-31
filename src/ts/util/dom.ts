@@ -54,22 +54,22 @@ export function onNumberChange(element: HTMLInputElement, callback: (number: num
     }
 }
 
-export function onTabKeyDown(event: KeyboardEvent, element: HTMLTextAreaElement) {
+export function tabKeyDownEventHandler(this: HTMLTextAreaElement, event: KeyboardEvent) {
     if (event.key !== "Tab")
         return
 
     event.preventDefault()
 
-    const start = element.selectionStart
-    const end   = element.selectionEnd
-    const value = element.value
+    const start = this.selectionStart
+    const end   = this.selectionEnd
+    const value = this.value
 
-    element.value = value.substring(0, start) +
-                    "\t"                      +
-                    value.substring(end)
+    this.value = value.substring(0, start) +
+                 "\t"                      +
+                 value.substring(end)
 
-    element.selectionStart = element.selectionEnd
-                           = start + 1
+    this.selectionStart = this.selectionEnd
+                        = start + 1
 
-    element.dispatchEvent(new Event("input"))
+    this.dispatchEvent(new Event("input"))
 }
