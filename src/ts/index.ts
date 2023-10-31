@@ -176,7 +176,16 @@ try {
     }
 
     debugCanvas.onwheel = event => {
-        renderer.scale   *= Math.pow(.99, scaleSensitivity * event.deltaY)
+        const scaleFactor = Math.pow(.99, scaleSensitivity * event.deltaY)
+        const deltaScale  =  (1 - scaleFactor) / (renderer.scale * scaleFactor)
+
+        const deltaX      = -(2 * event.clientX / debugCanvas.width  - 1) * deltaScale * renderer.aspectRatio
+        const deltaY      =  (2 * event.clientY / debugCanvas.height - 1) * deltaScale
+
+        renderer.scale   *= scaleFactor
+        renderer.x       += deltaX
+        renderer.y       += deltaY
+
         scaleInput.value  = renderer.scale.toString()
     }
 
