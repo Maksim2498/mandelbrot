@@ -141,15 +141,17 @@ select,
     width: 3rem;
     height: 3rem;
 
-    font-size: 0
+    font-size: 0;
+
+    filter: brightness(.8)
 }
 
 #fullscreen-button:hover {
-    background-image: url("images/fullscreen-icon-hover.svg")
+    filter: brightness(1)
 }
 
 #fullscreen-button:active {
-    background-image: url("images/fullscreen-icon-click.svg")
+    filter: brightness(.6)
 }
 
 #canvas-container:fullscreen #fullscreen-button {
