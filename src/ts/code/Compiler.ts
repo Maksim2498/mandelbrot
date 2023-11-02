@@ -4,7 +4,7 @@ import Parser        from "./parsing/Parser"
 
 import * as semantic from "./parsing/semantic/Node"
 
-export interface CompilerOptions {
+export interface Options {
     readonly parser?:        Parser
     readonly codeGenerator?: CodeGenerator
     readonly logCode?:       boolean
@@ -26,7 +26,7 @@ export default class Compiler {
     private _oldTree:     semantic.Root | null = null
     private _oldTempalte: CodeTemplate  | null = null
 
-    constructor(options: CompilerOptions = {}) {
+    constructor(options: Options = {}) {
         this.parser        = options.parser        ?? Compiler.DEFAULT_PARSER
         this.codeGenerator = options.codeGenerator ?? Compiler.DEFAULT_CODE_GENERATOR
         this.logCode       = options.logCode       ?? Compiler.DEFAULT_LOG_CODE

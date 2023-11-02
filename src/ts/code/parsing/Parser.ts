@@ -8,7 +8,7 @@ import * as semantic          from "./semantic/Node"
 
 import { TokenizationResult } from "ts/code/parsing/lexic/Tokenizer"
 
-export interface ParserOptions {
+export interface Options {
     readonly tokenizer?:        Tokenizer
     readonly treeBuilder?:      TreeBuilder
     readonly semanticAnalyzer?: SematicAnalyzer
@@ -39,7 +39,7 @@ export default class Parser {
     private _oldTokens:       TokenizationResult | null = null
     private _oldSemanticTree: semantic.Root      | null = null
 
-    constructor(options: ParserOptions = {}) {
+    constructor(options: Options = {}) {
         this.tokenizer        = options.tokenizer        ?? Parser.DEFAULT_TOKENIZER
         this.treeBuilder      = options.treeBuilder      ?? Parser.DEFAULT_TREE_BUILDER
         this.semanticAnalyzer = options.semanticAnalyzer ?? Parser.DEFAULT_SEMATIC_ANALYZER

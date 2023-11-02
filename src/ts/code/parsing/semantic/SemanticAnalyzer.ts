@@ -7,7 +7,7 @@ import * as semantic from "./Node"
 
 import * as bi       from "ts/code/lom/builtin"
 
-export interface SemanticAnalyzerOptions {
+export interface Options {
     readonly definitions?: readonly def.ReadonlyBuiltin[]
     readonly simplify?:    boolean
 }
@@ -51,7 +51,7 @@ export default class SemanticAnalyzer {
 
     private  _currentDefinitions!: Map<string, def.ReadonlyDefinition>
 
-    constructor(options: SemanticAnalyzerOptions = {}) {
+    constructor(options: Options = {}) {
         const definitions   = options.definitions ?? SemanticAnalyzer.DEFAULT_DEFINITIONS
         const simplify      = options.simplify    ?? SemanticAnalyzer.DEFAULT_SIMPLIFY
 

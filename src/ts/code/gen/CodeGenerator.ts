@@ -10,7 +10,7 @@ import * as semantic       from "ts/code//parsing/semantic/Node"
 import { indent          } from "ts/util/string"
 import { TAB_SIZE        } from "ts/const"
 
-export interface CodeGeneratorOptions {
+export interface Options {
     definitions?: def.ReadonlyDefinition[]
     varPrefix?:   string
 }
@@ -34,7 +34,7 @@ export default class CodeGenerator {
     private  _loopPredicateExpr!:       string
     private  _nextTmpVarNumber!:        number
 
-    constructor(options: CodeGeneratorOptions = {}) {
+    constructor(options: Options = {}) {
         const definitions = options.definitions ?? CodeGenerator.DEFAULT_DEFINITIONS
         const varPrefix   = options.varPrefix   ?? CodeGenerator.DEFAULT_VAR_PREFIX
 
