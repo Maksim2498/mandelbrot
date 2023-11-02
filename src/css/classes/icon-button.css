@@ -9,13 +9,13 @@
 
     font-size: 0;
 
-    filter: brightness(.8)
+    filter: brightness(.9)
 }
 
 .icon-button:hover {
-    filter: brightness(.6)
+    filter: brightness(.75)
 }
 
 .icon-button:active {
-    filter: brightness(.4)
+    filter: brightness(.6)
 }
