@@ -24,7 +24,7 @@ export type PostRenderEvent   = "post-render"
 export type PreCloseEvent     = "pre-close"
 export type PostCloseEvent    = "post-close"
 
-export type Events            = MillisUpdateEvent
+export type Event             = MillisUpdateEvent
                               | PreRenderEvent
                               | PostRenderEvent
                               | PreCloseEvent
