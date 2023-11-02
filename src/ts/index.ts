@@ -4,7 +4,7 @@ import generalizedMandelbrotCode  from "mandelbrot/generalized-mandelbrot.mandel
 import mandelbrotCode             from "mandelbrot/mandelbrot.mandelbrot"
 import targetCode                 from "mandelbrot/target.mandelbrot"
 import animatedTargetCode         from "mandelbrot/animated-target.mandelbrot"
-import voidCode                   from "mandelbrot/void.mandelbrot"
+import newtonsPoolsCode           from "mandelbrot/newtons-pools.mandelbrot"
 import islandsCode                from "mandelbrot/islands.mandelbrot"
 import Renderer                   from "./render/Renderer"
 
@@ -15,8 +15,6 @@ import { onNumberChange,
 
 import "css/index.css"
 
-
-type CursorState = "default" | "positioning" | "resizing-control-panel"
 
 interface Predef {
     name: string
@@ -52,8 +50,8 @@ const PREDEFS: readonly ReadonlyPredef[] = [
         code: animatedFlowerCode,
     },
     {
-        name: "Void (WIP)",
-        code: voidCode,
+        name: "Newton's Pools",
+        code: newtonsPoolsCode,
     },
     {
         name: "Islands (WIP)",
