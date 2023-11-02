@@ -19,16 +19,32 @@ import { stringToColor,
 
 
 export type MillisUpdateEvent = "millis-update"
+export type PreRenderEvent    = "pre-render"
+export type PostRenderEvent   = "post-render"
+export type PreCloseEvent     = "pre-close"
+export type PostCloseEvent    = "post-close"
 
 export type Events            = MillisUpdateEvent
+                              | PreRenderEvent
+                              | PostRenderEvent
+                              | PreCloseEvent
+                              | PostCloseEvent
 
 declare interface Renderer extends EventEmitter {
     on(event: MillisUpdateEvent, handler: (newMillis: number) => void): this
+    on(event: PreRenderEvent,    handler: (dt:        number) => void): this
+    on(event: PostRenderEvent,   handler: (dt:        number) => void): this
+    on(event: PreCloseEvent,     handler: (                 ) => void): this
+    on(event: PostCloseEvent,    handler: (                 ) => void): this
 
     emit(event: MillisUpdateEvent, newMillis: number): boolean
+    emit(event: PreRenderEvent,    dt:        number): boolean
+    emit(event: PostRenderEvent,   dt:        number): boolean
+    emit(event: PreCloseEvent                       ): boolean
+    emit(event: PostCloseEvent                      ): boolean
 }
 
- class Renderer extends EventEmitter {
+class Renderer extends EventEmitter {
     compiler       = new Compiler()
     showFPS        = false
     showResolution = false
@@ -350,17 +366,25 @@ declare interface Renderer extends EventEmitter {
     }
 
     render(dt: number = 0) {
+        this.emit("pre-render", dt)
+
         this._updateMillis(dt)
         this._updateFPSBuffer(dt)
         this._renderFractal()
         this._renderDebugInfo()
+
+        this.emit("post-render", dt)
     }
 
     close() {
+        this.emit("pre-close")
+
         this.autoRedraw = false
         this.autoResize = false
 
         this.deleteWebGLObjects()
+
+        this.emit("post-close")
     }
 
     private _updateFragmentShader() {
