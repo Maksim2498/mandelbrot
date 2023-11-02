@@ -8,11 +8,11 @@
 <g id="Layer-1">
 <g opacity="1">
 <use fill="#ffffff" fill-rule="nonzero" stroke="none" xlink:href="#Fill"/>
-<mask height="808" id="StrokeMask" maskUnits="userSpaceOnUse" width="808" x="108" y="108">
-<rect fill="#ffffff" height="808" stroke="none" width="808" x="108" y="108"/>
+<mask height="864" id="StrokeMask" maskUnits="userSpaceOnUse" width="864" x="80" y="80">
+<rect fill="#ffffff" height="864" stroke="none" width="864" x="80" y="80"/>
 <use fill="#000000" fill-rule="evenodd" stroke="none" xlink:href="#Fill"/>
 </mask>
-<use fill="none" mask="url(#StrokeMask)" stroke="#000000" stroke-linecap="butt" stroke-linejoin="round" stroke-width="8" xlink:href="#Fill"/>
+<use fill="none" mask="url(#StrokeMask)" stroke="#000000" stroke-linecap="butt" stroke-linejoin="round" stroke-width="64" xlink:href="#Fill"/>
 </g>
 </g>
 </svg>

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Created with Vectornator (http://vectornator.io/) -->
-<svg height="1024.0px" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1024 1024" width="1024.0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height="1024.0px" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1024 1024" width="1024.0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs>
 <path d="M844.447 532.793L200.508 907.06C180.751 918.543 164.734 909.326 164.734 886.474L164.734 137.526C164.734 114.673 180.751 105.457 200.508 116.941L844.447 491.207C864.205 502.691 864.205 521.309 844.447 532.793Z" id="Fill"/>
 </defs>
-<g id="Layer-1">
-<g opacity="1">
+<g id="Layer-1" vectornator:layerName="Layer-1">
+<g opacity="1" vectornator:layerName="path">
 <use fill="#ffffff" fill-rule="nonzero" stroke="none" xlink:href="#Fill"/>
-<mask height="808" id="StrokeMask" maskUnits="userSpaceOnUse" width="702.532" x="160.734" y="108">
-<rect fill="#ffffff" height="808" stroke="none" width="702.532" x="160.734" y="108"/>
+<mask height="864" id="StrokeMask" maskUnits="userSpaceOnUse" width="758.532" x="132.734" y="80">
+<rect fill="#ffffff" height="864" stroke="none" width="758.532" x="132.734" y="80"/>
 <use fill="#000000" fill-rule="evenodd" stroke="none" xlink:href="#Fill"/>
 </mask>
-<use fill="none" mask="url(#StrokeMask)" stroke="#000000" stroke-linecap="butt" stroke-linejoin="round" stroke-width="8" xlink:href="#Fill"/>
+<use fill="none" mask="url(#StrokeMask)" stroke="#000000" stroke-linecap="butt" stroke-linejoin="round" stroke-width="64" xlink:href="#Fill"/>
 </g>
 </g>
 </svg>
