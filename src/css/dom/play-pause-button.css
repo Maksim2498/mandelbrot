@@ -1,0 +1,7 @@
+#play-pause-button {
+    background-image: url("images/pause-icon.svg")
+}
+
+#play-pause-button.paused {
+    background-image: url("images/play-icon.svg")
+}

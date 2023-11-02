@@ -1,0 +1,12 @@
+#fullscreen-button {
+    position: absolute;
+
+    left: 1rem;
+    bottom: 1rem;
+
+    background-image: url("images/fullscreen-icon.svg")
+}
+
+:fullscreen #fullscreen-button {
+    display: none
+}

@@ -61,7 +61,7 @@ const PREDEFS: readonly ReadonlyPredef[] = [
 
 
 try {
-    const canvasContainerDiv        = forceGetElementById("canvas-container"            ) as HTMLDivElement
+    const viewAreaDiv               = forceGetElementById("view-area"                   ) as HTMLDivElement
     const mainCanvas                = forceGetElementById("main-canvas"                 ) as HTMLCanvasElement
     const debugCanvas               = forceGetElementById("debug-canvas"                ) as HTMLCanvasElement
     const controlPanelDiv           = forceGetElementById("control-panel"               ) as HTMLDivElement
@@ -88,6 +88,9 @@ try {
     const lazyRenderingInput        = forceGetElementById("lazy-rendering-input"        ) as HTMLInputElement
     const compileButton             = forceGetElementById("compile-button"              ) as HTMLButtonElement
     const fullscreenButton          = forceGetElementById("fullscreen-button"           ) as HTMLButtonElement
+    const playPauseButton           = forceGetElementById("play-pause-button"           ) as HTMLButtonElement
+    const resetButton               = forceGetElementById("reset-button"                ) as HTMLButtonElement
+    const timeOutput                = forceGetElementById("time-output"                 ) as HTMLOutputElement
 
 
     const renderer = new Renderer(mainCanvas, debugCanvas)
@@ -95,16 +98,17 @@ try {
     renderer.autoRedraw = true
     renderer.autoResize = true
 
-
-    let scaleSensitivity = 1
-
-    scaleSensitivityInput.addEventListener("input", onScaleSensitivityChange)
-    onScaleSensitivityChange()
+    renderer.on("millis-update", onMillisUpdate)
 
 
     initPredefSelect()
     predefSelect.addEventListener("change", onPredefChange)
     onPredefChange()
+
+    let scaleSensitivity = 1
+
+    scaleSensitivityInput.addEventListener("input", onScaleSensitivityChange)
+    onScaleSensitivityChange()
 
 
     codeTextArea.addEventListener("input", onCodeChange)
@@ -135,6 +139,8 @@ try {
 
     compileButton.addEventListener("click", onCompile)
     fullscreenButton.addEventListener("click", onFullscreen)
+    playPauseButton.addEventListener("click", onPlayPause)
+    resetButton.addEventListener("click", onResetMillis)
 
 
     const inputs = [
@@ -168,12 +174,10 @@ try {
 
 
     codeTextArea.addEventListener("keydown", tabKeyDownEventHandler)
-    
+    viewAreaDiv.addEventListener("keydown", zeroKeyDownEventHandler)
+    viewAreaDiv.addEventListener("keydown", fullscreenKeyDownEventHandler)
 
-    canvasContainerDiv.addEventListener("keydown", zeroKeyDownEventHandler)
-    canvasContainerDiv.addEventListener("keydown", fullscreenKeyDownEventHandler)
-
-    canvasContainerDiv.addEventListener("wheel", event => {
+    viewAreaDiv.addEventListener("wheel", event => {
         const scaleFactor = Math.pow(.99, scaleSensitivity * event.deltaY)
         const oldScale    = renderer.scale
         const newScale    = oldScale * scaleFactor
@@ -194,7 +198,7 @@ try {
     let mouseActionState          = "none" as MouseActionState
     let readyToResizeControlPanel = false
 
-    canvasContainerDiv.addEventListener("mousedown", event => {
+    viewAreaDiv.addEventListener("mousedown", event => {
         if (readyToResizeControlPanel)
             return
 
@@ -209,7 +213,7 @@ try {
         document.body.style.cursor = "grabbing"
     })
 
-    canvasContainerDiv.addEventListener("mousemove", event => {
+    viewAreaDiv.addEventListener("mousemove", event => {
         if (mouseActionState !== "positioning")
             return
 
@@ -265,6 +269,25 @@ try {
                                                                : "default"
     })
 
+
+    function onMillisUpdate(millis: number) {
+        timeOutput.value = (millis / 1_000).toFixed(1) + " s"
+    }
+
+    function onResetMillis() {
+        renderer.millis = 0
+    }
+
+    function onPlayPause() {
+        renderer.paused = !renderer.paused
+
+        const pausedClassName = "paused"
+
+        if (renderer.paused)
+            playPauseButton.classList.add(pausedClassName)
+        else
+            playPauseButton.classList.remove(pausedClassName)
+    }
 
     function initPredefSelect() {
         for (const option of PREDEFS.map(predefToOptionElement))
@@ -365,7 +388,7 @@ try {
 
     function onFullscreen() {
         if (document.fullscreenElement == null)
-            canvasContainerDiv.requestFullscreen()
+            viewAreaDiv.requestFullscreen()
         else
             document.exitFullscreen()
     }
@@ -377,8 +400,8 @@ try {
     }
 
     function setControlPanelWidth(width: number) {
-        controlPanelDiv.style.width    = `${width}px`
-        canvasContainerDiv.style.width = `${(innerWidth - width)}px`
+        controlPanelDiv.style.width = `${width}px`
+        viewAreaDiv.style.width     = `${(innerWidth - width)}px`
     }
 
     function setPos(x: number, y: number) {
@@ -399,4 +422,4 @@ try {
     }
 } catch (error) {
     console.error(error)
-} //
+}

@@ -17,7 +17,7 @@ export function addError(error: unknown, element: HTMLElement) {
     const message      = error instanceof Error ? error.message
                                                 : String(error)
 
-    errorElement.className = "error"
+    errorElement.className = "error with-border"
     errorElement.innerHTML = message
 
     parent.insertBefore(errorElement, element.nextElementSibling)

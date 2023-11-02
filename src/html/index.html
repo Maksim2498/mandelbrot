@@ -5,223 +5,246 @@
         <title>Mandelbrot</title>
     </head>
     <body>
-        <main>
-            <div id="canvas-container" tabindex="-1">
-                <canvas id="main-canvas">
-                    Canvas isn't supported by your browser
-                </canvas>
+        <div id="view-area" tabindex="-1">
+            <canvas id="main-canvas">
+                Canvas isn't supported by your browser
+            </canvas>
 
-                <canvas id="debug-canvas">
-                    Canvas isn't supported by your browser
-                </canvas>
+            <canvas id="debug-canvas">
+                Canvas isn't supported by your browser
+            </canvas>
 
-                <button id="fullscreen-button">
-                    Fullscreen
-                </button>
+            <div id="time-controller-wrapper">
+                <div id="time-controller">
+                    <button id="play-pause-button" class="icon-button">Pause/Play</button>
+                    <button id="reset-button" class="icon-button">Reset</button>
+                    <output id="time-output" class="with-border">0</output>
+                </div>
             </div>
 
-            <div id="control-panel">
-                <select id="predef-select"
-                        autocomplete="off">
-                </select>
+            <button id="fullscreen-button" class="icon-button">
+                Fullscreen
+            </button>
 
+            <a href="https://hub.mos.ru/fominmv2498/mandelbrot" id="repo">MosHub</a>
+        </div>
+
+        <div id="control-panel">
+            <select id="predef-select"
+                    class="with-border"
+                    autocomplete="off">
+            </select>
+
+            <div class="input">
+                <label for="code-text-area">Code</label>
+                <textarea id="code-text-area"
+                          class="code with-border"
+                          rows="7"
+                          autofocus
+                          placeholder="code"
+                          autocomplete="off"
+                          autocorrect="off"
+                          autocapitalize="off"
+                          spellcheck="false"></textarea>
+            </div>
+
+            <button id="compile-button" class="with-border">Compile</button>
+
+            <div class="input">
+                <label for="max-iters-input">Max Iterations</label>
+                <input id="max-iters-input"
+                       class="with-border"
+                       type="number"
+                       autocomplete="off"
+                       min="0"
+                       value="32"
+                       placeholder="number">
+            </div>
+
+            <div class="bicolumn">
                 <div class="input">
-                    <label for="code-text-area">Code</label>
-                    <textarea id="code-text-area"
-                              class="code"
-                              rows="7"
-                              autofocus
-                              placeholder="code"
-                              autocomplete="off"
-                              autocorrect="off"
-                              autocapitalize="off"
-                              spellcheck="false"></textarea>
-                </div>
-
-                <button id="compile-button">Compile</button>
-
-                <div class="input">
-                    <label for="max-iters-input">Max Iterations</label>
-                    <input id="max-iters-input"
+                    <label for="x-input">X</label>
+                    <input id="x-input"
+                           class="with-border"
                            type="number"
                            autocomplete="off"
-                           min="0"
-                           value="32"
+                           value="-0.75"
+                           step="0.1"
                            placeholder="number">
                 </div>
 
-                <div class="bicolumn">
-                    <div class="input">
-                        <label for="x-input">X</label>
-                        <input id="x-input"
-                               type="number"
-                               autocomplete="off"
-                               value="-0.75"
-                               step="0.1"
-                               placeholder="number">
-                    </div>
-
-                    <div class="input">
-                        <label for="y-input">Y</label>
-                        <input id="y-input"
-                               type="number"
-                               autocomplete="off"
-                               value="0"
-                               step="0.1"
-                               placeholder="number">
-                    </div>
-
-                    <div class="input">
-                        <label for="scale-input">Scale</label>
-                        <input id="scale-input"
-                               type="number"
-                               autocomplete="off"
-                               value="0.65"
-                               step="0.1"
-                               placeholder="number">
-                    </div>
-
-                    <div class="input">
-                        <label for="angle-input">Angle</label>
-                        <input id="angle-input"
-                               type="number"
-                               autocomplete="off"
-                               value="0"
-                               step="5"
-                               placeholder="number">
-                    </div>
+                <div class="input">
+                    <label for="y-input">Y</label>
+                    <input id="y-input"
+                           class="with-border"
+                           type="number"
+                           autocomplete="off"
+                           value="0"
+                           step="0.1"
+                           placeholder="number">
                 </div>
 
                 <div class="input">
-                    <label for="set-color-input">Set Color</label>
-                    <input id="set-color-input"
+                    <label for="scale-input">Scale</label>
+                    <input id="scale-input"
+                           class="with-border"
+                           type="number"
+                           autocomplete="off"
+                           value="0.65"
+                           step="0.1"
+                           placeholder="number">
+                </div>
+
+                <div class="input">
+                    <label for="angle-input">Angle</label>
+                    <input id="angle-input"
+                           class="with-border"
+                           type="number"
+                           autocomplete="off"
+                           value="0"
+                           step="5"
+                           placeholder="number">
+                </div>
+            </div>
+
+            <div class="input">
+                <label for="set-color-input">Set Color</label>
+                <input id="set-color-input"
+                       class="with-border"
+                       placeholder="HEX color"
+                       type="color"
+                       value="#FFFFFF"
+                       autocomplete="off">
+            </div>
+
+            <div class="bicolumn">
+                <div class="input">
+                    <label for="background-start-color-input">Background Start Color</label>
+                    <input id="background-start-color-input"
+                           class="with-border"
                            placeholder="HEX color"
                            type="color"
-                           value="#FFFFFF"
+                           value="#FF00FF"
                            autocomplete="off">
                 </div>
 
-                <div class="bicolumn">
-                    <div class="input">
-                        <label for="background-start-color-input">Background Start Color</label>
-                        <input id="background-start-color-input"
-                               placeholder="HEX color"
-                               type="color"
-                               value="#FF00FF"
-                               autocomplete="off">
-                    </div>
+                <div class="input">
+                    <label for="background-end-color-input">Background End Color</label>
+                    <input id="background-end-color-input"
+                           class="with-border"
+                           placeholder="HEX color"
+                           type="color"
+                           value="#000000"
+                           autocomplete="off">
+                </div>
+            </div>
 
-                    <div class="input">
-                        <label for="background-end-color-input">Background End Color</label>
-                        <input id="background-end-color-input"
-                               placeholder="HEX color"
-                               type="color"
-                               value="#000000"
-                               autocomplete="off">
-                    </div>
+            <details class="with-border">
+                <summary>Advanced</summary>
+
+                <div class="section-header">Miscellaneous</div>
+
+                <div class="input">
+                    <label for="scale-sensitivity-input">Scale Sensitivity</label>
+                    <input id="scale-sensitivity-input"
+                           class="with-border"
+                           type="number"
+                           autocomplete="off"
+                           min="0"
+                           value="1"
+                           step="0.1"
+                           placeholder="number">
                 </div>
 
-                <details>
-                    <summary>Advanced</summary>
+                <div class="checkbox-input">
+                    <input id="autocompile-input"
+                           class="with-border"
+                           type="checkbox"
+                           autocomplete="off"
+                           checked>
+                    <label for="autocompile-input">Autocompile</label>
+                </div>
 
-                    <div class="section-header">Miscellaneous</div>
+                <div class="checkbox-input">
+                    <input id="lazy-rendering-input"
+                           class="with-border"
+                           type="checkbox"
+                           autocomplete="off">
+                    <label for="lazy-rendering-input">Lazy Rendering</label>
+                </div>
 
-                    <div class="input">
-                        <label for="scale-sensitivity-input">Scale Sensitivity</label>
-                        <input id="scale-sensitivity-input"
-                                type="number"
-                                autocomplete="off"
-                                min="0"
-                                value="1"
-                                step="0.1"
-                                placeholder="number">
-                    </div>
+                <div class="checkbox-input">
+                    <input id="show-fps-input"
+                           class="with-border"
+                           type="checkbox"
+                           autocomplete="off">
+                    <label for="show-fps-input">Show FPS</label>
+                </div>
 
-                    <div class="checkbox-input">
-                        <input id="autocompile-input"
-                               type="checkbox"
-                               autocomplete="off"
-                               checked>
-                        <label for="autocompile-input">Autocompile</label>
-                    </div>
+                <div class="section-header">Resolution</div>
 
-                    <div class="checkbox-input">
-                        <input id="lazy-rendering-input"
-                               type="checkbox"
-                               autocomplete="off"
-                               checked>
-                        <label for="lazy-rendering-input">Lazy Rendering</label>
-                    </div>
+                <div class="input">
+                    <label for="resolution-scale-input">Resolution Scale</label>
+                    <input id="resolution-scale-input"
+                           class="with-border"
+                           type="number"
+                           autocomplete="off"
+                           min="0"
+                           value="1"
+                           step="0.1"
+                           placeholder="number">
+                </div>
 
-                    <div class="checkbox-input">
-                        <input id="show-fps-input"
-                               type="checkbox"
-                               autocomplete="off">
-                        <label for="show-fps-input">Show FPS</label>
-                    </div>
+                <div class="checkbox-input">
+                    <input id="use-real-pixel-size-input"
+                           class="with-border"
+                           type="checkbox"
+                           autocomplete="off">
+                    <label for="use-real-pixel-size-input">Real Pixel Size</label>
+                </div>
 
-                    <div class="section-header">Resolution</div>
+                <div class="checkbox-input">
+                    <input id="show-resolution-input"
+                           class="with-border"
+                           type="checkbox"
+                           autocomplete="off">
+                    <label for="show-resolution-input">Show Resoulution</label>
+                </div>
 
-                    <div class="input">
-                        <label for="resolution-scale-input">Resolution Scale</label>
-                        <input id="resolution-scale-input"
-                                type="number"
-                                autocomplete="off"
-                                min="0"
-                                value="1"
-                                step="0.1"
-                                placeholder="number">
-                    </div>
+                <div class="section-header">Logging</div>
 
-                    <div class="checkbox-input">
-                        <input id="use-real-pixel-size-input"
-                               type="checkbox"
-                               autocomplete="off">
-                        <label for="use-real-pixel-size-input">Real Pixel Size</label>
-                    </div>
+                <div class="checkbox-input">
+                    <input id="log-tokens-input"
+                           class="with-border"
+                           type="checkbox"
+                           autocomplete="off">
+                    <label for="log-tokens-input">Log Tokens</label>
+                </div>
 
-                    <div class="checkbox-input">
-                        <input id="show-resolution-input"
-                               type="checkbox"
-                               autocomplete="off">
-                        <label for="show-resolution-input">Show Resoulution</label>
-                    </div>
+                <div class="checkbox-input">
+                    <input id="log-syntax-tree-input"
+                           class="with-border"
+                           type="checkbox"
+                           autocomplete="off">
+                    <label for="log-syntax-tree-input">Log Syntax Tree</label>
+                </div>
 
-                    <div class="section-header">Logging</div>
+                <div class="checkbox-input">
+                    <input id="log-semantic-tree-input"
+                           class="with-border"
+                           type="checkbox"
+                           autocomplete="off">
+                    <label for="log-semantic-tree-input">Log Semantic Tree</label>
+                </div>
 
-                    <div class="checkbox-input">
-                        <input id="log-tokens-input"
-                               type="checkbox"
-                               autocomplete="off">
-                        <label for="log-tokens-input">Log Tokens</label>
-                    </div>
-
-                    <div class="checkbox-input">
-                        <input id="log-syntax-tree-input"
-                               type="checkbox"
-                               autocomplete="off">
-                        <label for="log-syntax-tree-input">Log Syntax Tree</label>
-                    </div>
-
-                    <div class="checkbox-input">
-                        <input id="log-semantic-tree-input"
-                               type="checkbox"
-                               autocomplete="off">
-                        <label for="log-semantic-tree-input">Log Semantic Tree</label>
-                    </div>
-
-                    <div class="checkbox-input">
-                        <input id="log-glsl-code-input"
-                               type="checkbox"
-                               autocomplete="off">
-                        <label for="log-glsl-code-input">Log GLSL Code</label>
-                    </div>
-                </details>
-            </div>
-        </main>
-
-        <footer>
-            <a href="https://hub.mos.ru/fominmv2498/mandelbrot" id="repo">MosHub</a>
-        </footer>
+                <div class="checkbox-input">
+                    <input id="log-glsl-code-input"
+                           class="with-border"
+                           type="checkbox"
+                           autocomplete="off">
+                    <label for="log-glsl-code-input">Log GLSL Code</label>
+                </div>
+            </details>
+        </div>
     </body>
 </html>

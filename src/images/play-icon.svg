@@ -3,13 +3,13 @@
 <!-- Created with Vectornator (http://vectornator.io/) -->
 <svg height="1024.0px" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1024 1024" width="1024.0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs>
-<path d="M53.8125 12C30.726 12 12 30.275 12 52.8125L12 212L62 212L62 98.7188C62 78.435 78.8473 62 99.625 62L212 62L212 12L53.8125 12ZM812 12L812 62L924.375 62C945.153 62 962 78.435 962 98.7188L962 212L1012 212L1012 52.8125C1012 30.275 993.274 12 970.188 12L812 12ZM12 812L12 971.188C11.9999 993.725 30.726 1012 53.8125 1012L212 1012L212 962L99.625 962C78.8472 962 62 945.565 62 925.281L62 812L12 812ZM962 812L962 925.281C962 945.565 945.153 962 924.375 962L812 962L812 1012L970.188 1012C993.274 1012 1012 993.725 1012 971.188L1012 812L962 812Z" id="Fill"/>
+<path d="M844.447 532.793L200.508 907.06C180.751 918.543 164.734 909.326 164.734 886.474L164.734 137.526C164.734 114.673 180.751 105.457 200.508 116.941L844.447 491.207C864.205 502.691 864.205 521.309 844.447 532.793Z" id="Fill"/>
 </defs>
 <g id="Layer-1">
 <g opacity="1">
 <use fill="#ffffff" fill-rule="nonzero" stroke="none" xlink:href="#Fill"/>
-<mask height="1008" id="StrokeMask" maskUnits="userSpaceOnUse" width="1008" x="8" y="8">
-<rect fill="#ffffff" height="1008" stroke="none" width="1008" x="8" y="8"/>
+<mask height="808" id="StrokeMask" maskUnits="userSpaceOnUse" width="702.532" x="160.734" y="108">
+<rect fill="#ffffff" height="808" stroke="none" width="702.532" x="160.734" y="108"/>
 <use fill="#000000" fill-rule="evenodd" stroke="none" xlink:href="#Fill"/>
 </mask>
 <use fill="none" mask="url(#StrokeMask)" stroke="#000000" stroke-linecap="butt" stroke-linejoin="round" stroke-width="8" xlink:href="#Fill"/>

@@ -1,0 +1,31 @@
+* {
+    font-family: sans-serif;
+
+    box-sizing: border-box;
+
+    margin: 0;
+    padding: 0;
+
+    tab-size: 4
+}
+
+html,
+body {
+    height: 100%;
+    overflow: hidden
+}
+
+label,
+summary,
+button {
+    font-weight: bold
+}
+
+input,
+button {
+    width: 100%
+}
+
+input[type="color"] {
+    padding: 0
+}

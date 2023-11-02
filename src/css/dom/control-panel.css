@@ -1,0 +1,22 @@
+#control-panel {
+    width: 20rem;
+    min-width: 15rem;
+
+    padding: 1.5rem 1.5rem 5rem 1.5rem;
+    border-left: 1px solid black;
+
+    overflow-y: scroll
+}
+
+#control-panel > * {
+    width: 100%
+}
+
+#control-panel > *:not(:first-child),
+#control-panel > details > *:not(:first-child) {
+    margin-top: 1rem
+}
+
+#control-panel textarea {
+    resize: vertical
+}

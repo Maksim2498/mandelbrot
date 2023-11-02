@@ -1,3 +1,5 @@
+import EventEmitter           from "events"
+
 import vertexShaderSource     from "glsl/vertex.glsl"
 import CodeTemplate           from "ts/code/gen/CodeTemplate"
 import Compiler               from "ts/code/Compiler"
@@ -7,20 +9,33 @@ import ProgramCreationError   from "./error/program/ProgramCreationError"
 import ProgramLinkError       from "./error/program/ProgramLinkError"
 import ShaderCompilationError from "./error/shader/ShaderCompilationError"
 import ShaderCreationError    from "./error/shader/ShaderCreationError"
-import UniformNotFoundError from "./error/uniform/UniformNotFoundError"
-import ReadonlyColor        from "./Color"
+import UniformNotFoundError   from "./error/uniform/UniformNotFoundError"
+import ReadonlyColor          from "./Color"
 
-import { degreesToRadians } from "ts/util/math"
+import { degreesToRadians   } from "ts/util/math"
 import { stringToColor,
          colorToString,
-         areColorsEqual   } from "./Color"
+         areColorsEqual     } from "./Color"
 
-export default class Renderer {
+
+export type MillisUpdateEvent = "millis-update"
+
+export type Events            = MillisUpdateEvent
+
+declare interface Renderer extends EventEmitter {
+    on(event: MillisUpdateEvent, handler: (newMillis: number) => void): this
+
+    emit(event: MillisUpdateEvent, newMillis: number): boolean
+}
+
+ class Renderer extends EventEmitter {
     compiler       = new Compiler()
     showFPS        = false
     showResolution = false
     margin         = 16
     lazy           = true
+    millis         = 0
+    paused         = false
 
     private _x:                                    number                          = 0
     private _y:                                    number                          = 0
@@ -74,6 +89,8 @@ export default class Renderer {
         public readonly mainCanvas:  HTMLCanvasElement,
         public readonly debugCanvas: HTMLCanvasElement | null = null,
     ) {
+        super()
+
         this._initWebGLContext()
         this._init2DContext()
         this._resize()
@@ -333,6 +350,7 @@ export default class Renderer {
     }
 
     render(dt: number = 0) {
+        this._updateMillis(dt)
         this._updateFPSBuffer(dt)
         this._renderFractal()
         this._renderDebugInfo()
@@ -572,13 +590,22 @@ export default class Renderer {
         this.debugCanvas.height = this.debugCanvas.clientHeight
     }
 
+    private _updateMillis(dt: number) {
+        if (this.paused)
+            return
+
+        this.millis += dt
+
+        this.emit("millis-update", this.millis)
+    }
+
     private _updateFPSBuffer(dt: number) {
         this._fpsBuffer[this._fpsBufferIndex] = 1_000 / dt
         this._fpsBufferIndex                  = (this._fpsBufferIndex + 1) % this._fpsBuffer.length
     }
 
     private _renderFractal() {
-        if (this.lazy && !this._needRedraw)
+        if (!this._needRedraw && (this.lazy || this.paused))
             return
 
         this._setupUniforms()
@@ -597,7 +624,7 @@ export default class Renderer {
         this._gl.uniform1f(this._aspectRatioUniformLocation,          this.aspectRatio             )
 
         if (this._millisUniformLocation != null)
-            this._gl.uniform1f(this._millisUniformLocation, performance.now())
+            this._gl.uniform1f(this._millisUniformLocation, this.millis)
     }
 
     private _renderFractalRect() {
@@ -666,3 +693,5 @@ export default class Renderer {
         this._2d!.restore()
     }
 }
+
+export default Renderer

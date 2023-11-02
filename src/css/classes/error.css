@@ -1,0 +1,12 @@
+.error {
+    font-family: monospace;
+    font-size: small;
+    white-space: pre;
+
+    color: red;
+
+    margin-top: .5rem;
+    padding-bottom: 1rem;
+
+    overflow: scroll
+}

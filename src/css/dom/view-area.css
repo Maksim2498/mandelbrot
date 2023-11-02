@@ -1,0 +1,21 @@
+@import url("./fullscreen-button.css");
+@import url("./time-controller-wrapper.css");
+@import url("./repo.css");
+
+#view-area {
+    position: relative;
+
+    width: calc(100% - 20rem);
+    max-width: calc(100% - 15rem)
+}
+
+#main-canvas,
+#debug-canvas {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%
+}

@@ -1,0 +1,11 @@
+@import url("./view-area.css");
+@import url("./control-panel.css");
+
+body {
+    display: flex
+}
+
+body,
+body > * {
+    height: 100%
+}

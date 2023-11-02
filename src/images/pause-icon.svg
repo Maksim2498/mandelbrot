@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="1024.0px" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1024 1024" width="1024.0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<path d="M204.723 147.556C204.723 127.919 236.561 112 275.834 112L311.389 112C350.663 112 382.5 127.919 382.5 147.556L382.5 876.444C382.5 896.081 350.663 912 311.389 912L275.834 912C236.561 912 204.723 896.081 204.723 876.444L204.723 147.556Z" id="Fill"/>
+<path d="M641.5 147.556C641.5 127.919 673.337 112 712.611 112L748.166 112C787.439 112 819.277 127.919 819.277 147.556L819.277 876.444C819.277 896.081 787.439 912 748.166 912L712.611 912C673.337 912 641.5 896.081 641.5 876.444L641.5 147.556Z" id="Fill_2"/>
+</defs>
+<g id="Layer-1">
+<g opacity="1">
+<g opacity="1">
+<use fill="#ffffff" fill-rule="nonzero" stroke="none" xlink:href="#Fill"/>
+<mask height="808" id="StrokeMask" maskUnits="userSpaceOnUse" width="185.778" x="200.723" y="108">
+<rect fill="#ffffff" height="808" stroke="none" width="185.778" x="200.723" y="108"/>
+<use fill="#000000" fill-rule="evenodd" stroke="none" xlink:href="#Fill"/>
+</mask>
+<use fill="none" mask="url(#StrokeMask)" stroke="#000000" stroke-linecap="butt" stroke-linejoin="round" stroke-width="8" xlink:href="#Fill"/>
+</g>
+<g opacity="1">
+<use fill="#ffffff" fill-rule="nonzero" stroke="none" xlink:href="#Fill_2"/>
+<mask height="808" id="StrokeMask_2" maskUnits="userSpaceOnUse" width="185.778" x="637.5" y="108">
+<rect fill="#ffffff" height="808" stroke="none" width="185.778" x="637.5" y="108"/>
+<use fill="#000000" fill-rule="evenodd" stroke="none" xlink:href="#Fill_2"/>
+</mask>
+<use fill="none" mask="url(#StrokeMask_2)" stroke="#000000" stroke-linecap="butt" stroke-linejoin="round" stroke-width="8" xlink:href="#Fill_2"/>
+</g>
+</g>
+</g>
+</svg>

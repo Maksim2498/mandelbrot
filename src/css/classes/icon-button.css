@@ -1,0 +1,21 @@
+.icon-button {
+    background-size: contain;
+    background-color: transparent;
+
+    border: none;
+
+    width: 2rem;
+    height: 2rem;
+
+    font-size: 0;
+
+    filter: brightness(.8)
+}
+
+.icon-button:hover {
+    filter: brightness(.6)
+}
+
+.icon-button:active {
+    filter: brightness(.4)
+}

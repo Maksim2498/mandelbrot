@@ -1,0 +1,16 @@
+.bicolumn {
+    display: flex;
+    flex-wrap: wrap
+}
+
+.bicolumn > * {
+    width: calc(50% - .5rem)
+}
+
+.bicolumn > *:nth-child(even) {
+    margin-left: 1rem
+}
+
+.bicolumn > *:nth-child(n + 3) {
+    margin-top: 1rem
+}

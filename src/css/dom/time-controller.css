@@ -1,0 +1,29 @@
+@import url("./play-pause-button.css");
+@import url("./reset-button.css");
+@import url("./time-output.css");
+
+#time-controller {
+    position: absolute;
+
+    left: 50%;
+    top: 1rem;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+
+    transition: top .25s
+}
+
+#time-controller > *:not(:first-child) {
+    margin-left: .5rem
+}
+
+:fullscreen #time-controller {
+    top: -100%
+}
+
+:fullscreen #time-controller-wrapper:hover #time-controller {
+    top: 1rem
+}
