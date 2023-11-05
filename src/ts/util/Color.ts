@@ -1,6 +1,6 @@
 import { clamp } from "ts/util/math"
 
-type Color = [number, number, number]
+export type Color = [number, number, number]
 
 export default Color
 
@@ -27,7 +27,7 @@ const HEX_DICT    = {
     "f": 15,
 } as const
 
-export function areColorsEqual(lhs: ReadonlyColor, rhs: ReadonlyColor): boolean {
+export function areEqual(lhs: ReadonlyColor, rhs: ReadonlyColor): boolean {
     for (let i = 0; i < 3; ++i)
         if (lhs[i] !== rhs[i])
             return false
@@ -35,7 +35,7 @@ export function areColorsEqual(lhs: ReadonlyColor, rhs: ReadonlyColor): boolean 
     return true
 }
 
-export function stringToColor(string: string): Color {
+export function fromString(string: string): Color {
     const matches = string.trim()
                           .toLowerCase()
                           .match(COLOR_REGEX)
@@ -53,9 +53,9 @@ export function stringToColor(string: string): Color {
     }) as Color
 }
 
-export function colorToString(color: ReadonlyColor): string {
+export function toString(color: ReadonlyColor): string {
     return "#" + color.map(component => {
-        component = Math.round(256 * clamp(component, 0, 1))
+        component = Math.round(255 * clamp(component, 0, 1))
 
         const parts = [
             (component & 0xF0) >> 4,

@@ -10,12 +10,10 @@ import ProgramLinkError       from "./error/program/ProgramLinkError"
 import ShaderCompilationError from "./error/shader/ShaderCompilationError"
 import ShaderCreationError    from "./error/shader/ShaderCreationError"
 import UniformNotFoundError   from "./error/uniform/UniformNotFoundError"
-import ReadonlyColor          from "./Color"
+
+import * as color             from "ts/util/Color"
 
 import { degreesToRadians   } from "ts/util/math"
-import { stringToColor,
-         colorToString,
-         areColorsEqual     } from "./Color"
 
 
 export type MillisUpdateEvent = "millis-update"
@@ -29,6 +27,7 @@ export type Event             = MillisUpdateEvent
                               | PostRenderEvent
                               | PreCloseEvent
                               | PostCloseEvent
+
 
 declare interface Renderer extends EventEmitter {
     on(event: MillisUpdateEvent, handler: (newMillis: number) => void): this
@@ -58,9 +57,9 @@ class Renderer extends EventEmitter {
     private _scale:                                number                          = 1
     private _angle:                                number                          = 0
     private _resolutionScale:                      number                          = 1
-    private _setColor:                             ReadonlyColor                   = [0, 0, 0]
-    private _backgroundStartColor:                 ReadonlyColor                   = [1, 0, 1]
-    private _backgroundEndColor:                   ReadonlyColor                   = [0, 0, 0]
+    private _setColor:                             color.ReadonlyColor             = [0, 0, 0]
+    private _backgroundStartColor:                 color.ReadonlyColor             = [1, 0, 1]
+    private _backgroundEndColor:                   color.ReadonlyColor             = [0, 0, 0]
     private _useRealPixelSize:                     boolean                         = false
     private _needRedraw:                           boolean                         = true
     private _codeTemplate:                         CodeTemplate                    = new CodeTemplate()
@@ -206,13 +205,13 @@ class Renderer extends EventEmitter {
     }
 
     get setColor(): string {
-        return colorToString(this._setColor)
+        return color.toString(this._setColor)
     }
 
     set setColor(value: string) {
-        const colorValue = stringToColor(value)
+        const colorValue = color.fromString(value)
 
-        if (areColorsEqual(colorValue, this._setColor))
+        if (color.areEqual(colorValue, this._setColor))
             return
 
         this._setColor   = colorValue
@@ -220,13 +219,13 @@ class Renderer extends EventEmitter {
     }
 
     get backgroundStartColor(): string {
-        return colorToString(this._backgroundStartColor)
+        return color.toString(this._backgroundStartColor)
     }
 
     set backgroundStartColor(value: string) {
-        const colorValue = stringToColor(value)
+        const colorValue = color.fromString(value)
 
-        if (areColorsEqual(colorValue, this._backgroundStartColor))
+        if (color.areEqual(colorValue, this._backgroundStartColor))
             return
 
         this._backgroundStartColor = colorValue
@@ -234,13 +233,13 @@ class Renderer extends EventEmitter {
     }
 
     get backgroundEndColor(): string {
-        return colorToString(this._backgroundEndColor)
+        return color.toString(this._backgroundEndColor)
     }
 
     set backgroundEndColor(value: string) {
-        const colorValue = stringToColor(value)
+        const colorValue = color.fromString(value)
 
-        if (areColorsEqual(colorValue, this._backgroundEndColor))
+        if (color.areEqual(colorValue, this._backgroundEndColor))
             return
 
         this._backgroundEndColor = colorValue
