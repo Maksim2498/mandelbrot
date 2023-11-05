@@ -1,3 +1,4 @@
+import DeepReadonly  from "ts/util/type/DeepReadonly"
 import SemanticError from "./error/SemanticError"
 
 import * as def      from "ts/code/lom/Definition"
@@ -7,15 +8,20 @@ import * as semantic from "./Node"
 
 import * as bi       from "ts/code/lom/builtin"
 
-export interface Options {
-    readonly definitions?: readonly def.ReadonlyBuiltin[]
-    readonly simplify?:    boolean
-}
 
 interface PosInfo {
     code: string
     pos:  number
 }
+
+
+export interface Options {
+    definitions?: def.Builtin[]
+    simplify?:    boolean
+}
+
+export interface ReadonlyOptions extends DeepReadonly<Options> {}
+
 
 export default class SemanticAnalyzer {
     static readonly DEFAULT_DEFINITIONS: readonly def.ReadonlyBuiltin[] = [
@@ -51,7 +57,7 @@ export default class SemanticAnalyzer {
 
     private  _currentDefinitions!: Map<string, def.ReadonlyDefinition>
 
-    constructor(options: Options = {}) {
+    constructor(options: ReadonlyOptions = {}) {
         const definitions   = options.definitions ?? SemanticAnalyzer.DEFAULT_DEFINITIONS
         const simplify      = options.simplify    ?? SemanticAnalyzer.DEFAULT_SIMPLIFY
 
