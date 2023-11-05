@@ -128,3 +128,7 @@ export function placehold(
 
     return result.join("")
 }
+
+export function insert(to: string, what: string, where: number): string {
+    return to.slice(0, where) + what + to.slice(where)
+}
