@@ -1,4 +1,5 @@
 import defaultTemplate     from "glsl/fragment-template.glsl"
+import DeepReadonly        from "ts/util/type/DeepReadonly"
 import CodeGenerationError from "./error/CodeGenerationError"
 import CodeTemplate        from "./CodeTemplate"
 
@@ -11,9 +12,11 @@ import { indent          } from "ts/util/string"
 import { TAB_SIZE        } from "ts/const"
 
 export interface Options {
-    definitions?: def.ReadonlyDefinition[]
+    definitions?: def.Definition[]
     varPrefix?:   string
 }
+
+export interface ReadonlyOptions extends DeepReadonly<Options> {}
 
 export default class CodeGenerator {
     static readonly DEFAULT_DEFINITIONS: readonly def.ReadonlyDefinition[] = [
@@ -34,7 +37,7 @@ export default class CodeGenerator {
     private  _loopPredicateExpr!:       string
     private  _nextTmpVarNumber!:        number
 
-    constructor(options: Options = {}) {
+    constructor(options: ReadonlyOptions = {}) {
         const definitions = options.definitions ?? CodeGenerator.DEFAULT_DEFINITIONS
         const varPrefix   = options.varPrefix   ?? CodeGenerator.DEFAULT_VAR_PREFIX
 
