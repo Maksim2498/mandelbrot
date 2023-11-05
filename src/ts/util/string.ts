@@ -76,7 +76,7 @@ export function count(
     for (let index = from; index < to;) {
         index = string.indexOf(target, index)
 
-        if (index < 0)
+        if (index < 0 || index > to)
             break
 
         index += target.length
