@@ -8,10 +8,10 @@ zOld    =  complex(0)
 bailout =  0.00001
 
 do
-	fz   = coef1*z^power1 + coef2*z^power2 - 1
-	f1z  = coef1*power1*z^(power1 - 1) + coef2*power2*z^(power2 - 1)
-	f2z  = coef1*power1*(power1 - 1)*z^(power1 - 2) + coef2*power2*(power2 - 1)*z^(power2 - 2)
+	fz   = coef1 * z^power1 + coef2 * z^power2 - 1
+	f1z  = coef1 * power1 * z^(power1 - 1)  +  coef2 * power2 * z^(power2 - 1)
+	f2z  = coef1 * power1 * (power1 - 1) * z^(power1 - 2)  +  coef2 * power2 * (power2 - 1) * z^(power2 - 2)
     zOld = z
-	z    = z - (2*fz*f1z) / (2*f1z^2 - fz*f2z) + seed
+	z    = z - (2 * fz * f1z) / (2 * f1z^2  -  fz * f2z) + seed
 while
 	mod(z - zOld) > bailout
