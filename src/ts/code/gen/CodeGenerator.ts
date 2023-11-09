@@ -247,6 +247,8 @@ export default class CodeGenerator {
         switch (op.group) {
             case "|":
             case "&":
+                return generateLogic()
+
             case "<":
             case "<=":
             case ">":
@@ -297,6 +299,10 @@ export default class CodeGenerator {
             default:
                 const check: never = op
                 return ""
+        }
+
+        function generateLogic(): string {
+            return `(${lhsCode} ${op.group.repeat(2)} ${rhsCode})`
         }
 
         function generateCommon(): string {
