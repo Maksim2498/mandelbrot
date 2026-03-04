@@ -6,7 +6,7 @@ import * as t        from "./Token"
 import { TAB_SIZE  } from "ts/const"
 
 /*
-    Lexic:
+    lexis:
 
     control:  do|while
     id:       [_A-Za-z][_A-Za-z0-9]*
@@ -36,7 +36,7 @@ export default class Tokenizer {
                               .match(Tokenizer._BLANK_REGEX)![0]
 
             const length = match.length
-            
+
             pos += length
 
             if (match.endsWith("\n")) {
@@ -47,7 +47,7 @@ export default class Tokenizer {
                         pos:    pos - 1,
                         code,
                     })
-                
+
                     inLine = false
                 }
 
@@ -82,7 +82,7 @@ export default class Tokenizer {
                     const preOldIndentSize = oldIndentSizes[oldIndentSizes.length - 2]
 
                     if (preOldIndentSize !== indentSize)
-                        throw new LexicalError("Indent missmatch", code, pos)
+                        throw new LexicalError("Indent mismatch", code, pos)
 
                     group = "indent-shrink"
 
@@ -181,7 +181,7 @@ export default class Tokenizer {
 
                     break
                 }
-            
+
                 default: {
                     const match = code.substring(pos)
                                       .match(Tokenizer._ID_REGEX)

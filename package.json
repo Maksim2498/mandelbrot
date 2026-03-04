@@ -5,10 +5,10 @@
     "description": "Web app for rendering fractals with use of recurrent expressions",
     "homepage": "https://hub.mos.ru/fominmv2498/mandelbrot",
     "author": "Maksim Victorovich Fomin",
-    "license": "SEE LICENSE IN LICENSE.md",
+    "license": "SEE LICENSE IN LICENSE.txt",
     "repository": {
         "type": "git",
-        "url": "git@hub.mos.ru:fominmv2498/mandelbrot.git"
+        "url": "git@gitflic.ru:fomin2498/mandelbrot.git"
     },
     "scripts": {
         "start": "webpack serve --open",

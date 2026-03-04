@@ -14,7 +14,7 @@ export default class CodeTemplate {
     functions!:    string[]
     init!:         string
     loopBody!:     string
-    loopRedicate!: string
+    loopPredicate!: string
 
     private _maxIters: number = 32
 
@@ -38,7 +38,7 @@ export default class CodeTemplate {
         this.functions    = CodeTemplate.DEFAULT_FUNCTIONS
         this.init         = CodeTemplate.DEFAULT_INIT
         this.loopBody     = CodeTemplate.DEFAULT_LOOP_BODY
-        this.loopRedicate = CodeTemplate.DEFAULT_LOOP_PREDICATE
+        this.loopPredicate = CodeTemplate.DEFAULT_LOOP_PREDICATE
     }
 
     render(): string {
@@ -50,7 +50,7 @@ export default class CodeTemplate {
             functions:     this.functions.join("\n\n"),
             init:          this.init,
             loopBody:      this.loopBody,
-            loopPredicate: this.loopRedicate,
+            loopPredicate: this.loopPredicate,
         })
     }
 }

@@ -28,7 +28,7 @@ export default class Compiler {
     doBuffer:      boolean
 
     private _oldTree:     semantic.Root | null = null
-    private _oldTempalte: CodeTemplate  | null = null
+    private _oldTemplate: CodeTemplate  | null = null
 
     constructor(options: ReadonlyOptions = {}) {
         this.parser        = options.parser        ?? Compiler.DEFAULT_PARSER
@@ -41,7 +41,7 @@ export default class Compiler {
         const tree = this.parser.parse(code)
 
         if (tree === this._oldTree)
-            return this._oldTempalte!
+            return this._oldTemplate!
 
         const template = this.codeGenerator.generateCode(tree)
 
@@ -51,8 +51,8 @@ export default class Compiler {
         }
 
         this._oldTree     = tree
-        this._oldTempalte = template
-    
+        this._oldTemplate = template
+
         return template
     }
 }

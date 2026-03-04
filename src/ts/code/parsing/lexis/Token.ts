@@ -152,7 +152,7 @@ export type ExprGroup = ValueGroup
 // ----------------------------------------------------------------
 
 export type Group = EOTGroup
-                  | SepGroup 
+                  | SepGroup
                   | IndentGroup
                   | ControlGroup
                   | ExprGroup
@@ -167,7 +167,7 @@ export interface Base<G extends Group> {
 }
 
 
-export interface ReaodnlyBase<G extends Group> extends Readonly<Base<G>> {}
+export interface ReadonlyBase<G extends Group> extends Readonly<Base<G>> {}
 
 // ----------------------------------------------------------------
 
@@ -182,7 +182,7 @@ export type Sep = EOT
                 | ExprSep
 
 
-export interface ReaodnlySepBase<G extends SepGroup> extends Readonly<SepBase<G>> {}
+export interface ReadonlySepBase<G extends SepGroup> extends Readonly<SepBase<G>> {}
 
 export interface ReadonlyEOT     extends Readonly<EOT    > {}
 export interface ReadonlyEOL     extends Readonly<EOL    > {}
@@ -515,7 +515,7 @@ export type ReadonlyExpr = Readonly<Expr>
 // ----------------------------------------------------------------
 
 export type Token = EOT
-                  | Sep 
+                  | Sep
                   | Indent
                   | Control
                   | Expr

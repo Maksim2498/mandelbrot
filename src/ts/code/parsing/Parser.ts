@@ -1,12 +1,12 @@
-import Tokenizer              from "./lexic/Tokenizer"
+import Tokenizer              from "./lexis/Tokenizer"
 import SematicAnalyzer        from "./semantic/SemanticAnalyzer"
 import TreeBuilder            from "./syntax/TreeBuilder"
 
-import * as lexic             from "./lexic/Token"
+import * as lexis             from "./lexis/Token"
 import * as syntax            from "./syntax/Node"
 import * as semantic          from "./semantic/Node"
 
-import { TokenizationResult } from "ts/code/parsing/lexic/Tokenizer"
+import { TokenizationResult } from "ts/code/parsing/lexis/Tokenizer"
 
 
 export interface Options {
@@ -58,7 +58,7 @@ export default class Parser {
 
         if (this.logTokens) {
             console.log("Tokens:")
-            console.log(JSON.stringify(tokens.map(lexic.toString), null, 4))
+            console.log(JSON.stringify(tokens.map(lexis.toString), null, 4))
         }
 
         if (this.doBuffer && this._isTokenizationResultEqual(tokens))
@@ -95,7 +95,7 @@ export default class Parser {
             const lhs = result[i]
             const rhs = this._oldTokens[i]
 
-            if (!lexic.areEqual(lhs, rhs))
+            if (!lexis.areEqual(lhs, rhs))
                 return false
         }
 

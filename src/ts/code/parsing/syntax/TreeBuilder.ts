@@ -11,10 +11,10 @@
 import ExpectedError                  from "./error/ExpectedError"
 import SyntaxError                    from "./error/SyntaxError"
 
-import * as t                         from "ts/code/parsing/lexic/Token"
+import * as t                         from "ts/code/parsing/lexis/Token"
 import * as n                         from "./Node"
 
-import { ReadonlyTokenizationResult } from "ts/code/parsing/lexic/Tokenizer"
+import { ReadonlyTokenizationResult } from "ts/code/parsing/lexis/Tokenizer"
 
 /*
     Operator Precedence:
@@ -207,7 +207,7 @@ export default class TreeBuilder {
                             throw new ExpectedError(token, "indent-same", "indent-shrink")
                     }
                 }
-                
+
                 case "eot":
                     break loop
 
@@ -296,7 +296,7 @@ export default class TreeBuilder {
 
                 return n.makeAssign(group, id, this._parseExpr())
             }
-            
+
             default:
                 return null
         }
@@ -395,10 +395,10 @@ export default class TreeBuilder {
             case "real":
             case "imm":
                 return n.makeValue(token)
-            
+
             case "id": {
                 const id = n.makeValue(token)
-            
+
                 return this._tryParseCall(id) ?? id
             }
 

@@ -53,7 +53,7 @@ export default class CodeGenerator {
         const template = this._makeTemplate()
 
         this._reset()
-    
+
         return template
     }
 
@@ -78,11 +78,11 @@ export default class CodeGenerator {
             if (definition.code != null)
                 functions.push(definition.code)
 
-        template.template     = defaultTemplate
-        template.functions    = functions
-        template.init         = indent(joinCodeLines(this._initLines    ),     TAB_SIZE)
-        template.loopBody     = indent(joinCodeLines(this._loopBodyLines), 2 * TAB_SIZE)
-        template.loopRedicate = this._loopPredicateExpr
+        template.template      = defaultTemplate
+        template.functions     = functions
+        template.init          = indent(joinCodeLines(this._initLines    ),     TAB_SIZE)
+        template.loopBody      = indent(joinCodeLines(this._loopBodyLines), 2 * TAB_SIZE)
+        template.loopPredicate = this._loopPredicateExpr
 
         return template
 
@@ -314,7 +314,7 @@ export default class CodeGenerator {
         switch (op.group) {
             case "!":
                 return `!(${this._generateExprCode(op.args[0], lines)})`
-            
+
             default:
                 const check: never = op.group
                 return ""

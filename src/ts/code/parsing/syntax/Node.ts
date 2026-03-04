@@ -1,6 +1,6 @@
 import DeepReadonly from "ts/util/type/DeepReadonly"
 
-import * as t       from "ts/code/parsing/lexic/Token"
+import * as t       from "ts/code/parsing/lexis/Token"
 
 import { indent   } from "ts/util/string"
 
@@ -172,7 +172,7 @@ export interface UnaryBase<
 }
 
 
-export interface RadonlyUnaryBase<
+export interface ReadonlyUnaryBase<
     G extends UnaryGroup,
     A extends Node,
 > extends DeepReadonly<UnaryBase<G, A>> {}
@@ -781,7 +781,7 @@ export function toString(node: ReadonlyNode, indentSize: number = 4): string {
 
         case "imm":
             return `${node.value}i`
-        
+
         default:
             const check: never = node
             return ""

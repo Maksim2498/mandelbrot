@@ -271,7 +271,7 @@ export default class SemanticAnalyzer {
 
         lhs = semantic.makeUnaryOp("cast", commonType, lhs)
         rhs = semantic.makeUnaryOp("cast", commonType, rhs)
-    
+
         return semantic.makeBinaryOp(op.group, type.BOOL, lhs, rhs)
     }
 
@@ -295,7 +295,7 @@ export default class SemanticAnalyzer {
 
         lhs = semantic.makeUnaryOp("cast", commonType, lhs)
         rhs = semantic.makeUnaryOp("cast", commonType, rhs)
-    
+
         return semantic.makeBinaryOp(op.group, type.BOOL, lhs, rhs)
     }
 
@@ -376,7 +376,7 @@ export default class SemanticAnalyzer {
         const requiredArgTypes = definition.type.argTypes
 
         if (args.length !== requiredArgTypes.length)
-            this._argCountMissmatch(
+            this._argCountMismatch(
                 definition.id,
                 requiredArgTypes.length,
                 args.length,
@@ -385,11 +385,11 @@ export default class SemanticAnalyzer {
 
         for (let i = 0; i < args.length; ++i) {
             const arg          = args[i]
-            const proviedType  = arg.type
+            const providedType = arg.type
             const requiredType = requiredArgTypes[i]
 
-            if (!type.isCastableTo(proviedType, requiredType))
-                this._cannotBeCasted(proviedType, requiredType, argSyntaxes[i])
+            if (!type.isCastableTo(providedType, requiredType))
+                this._cannotBeCasted(providedType, requiredType, argSyntaxes[i])
 
             args[i] = semantic.makeUnaryOp("cast", requiredType, arg)
         }
@@ -474,9 +474,9 @@ export default class SemanticAnalyzer {
         )
     }
 
-    private _argCountMissmatch(id: string, required: number, provied: number, info: PosInfo): never {
+    private _argCountMismatch(id: string, required: number, provided: number, info: PosInfo): never {
         throw new SemanticError(
-            `${id} requires ${required} argument(s) but ${provied} was/were provied`,
+            `${id} requires ${required} argument(s) but ${provided} was/were provided`,
             info.code,
             info.pos,
         )

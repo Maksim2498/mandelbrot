@@ -187,7 +187,7 @@ export interface UnaryBase<
 }
 
 
-export interface RadonlyUnaryBase<
+export interface ReadonlyUnaryBase<
     G extends UnaryGroup,
     T extends t.Type,
     A extends Node,

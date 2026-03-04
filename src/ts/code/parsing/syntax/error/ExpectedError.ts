@@ -1,6 +1,6 @@
 import SyntaxError from "./SyntaxError"
 
-import * as t      from "ts/code/parsing/lexic/Token"
+import * as t      from "ts/code/parsing/lexis/Token"
 
 export default class ExpectedError extends SyntaxError {
     readonly got:      t.ReadonlyToken

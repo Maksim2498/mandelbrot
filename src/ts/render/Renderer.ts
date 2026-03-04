@@ -66,10 +66,10 @@ class Renderer extends EventEmitter {
     private _code:                                 string                          = ""
 
     private _gl!:                                  WebGLRenderingContext
-    private _vertextShader:                        WebGLShader              | null = null
+    private _vertexShader:                         WebGLShader              | null = null
     private _fragmentShader:                       WebGLShader              | null = null
     private _program:                              WebGLProgram             | null = null
-    private _vertextBuffer:                        WebGLBuffer              | null = null
+    private _vertexBuffer:                         WebGLBuffer              | null = null
     private _setColorUniformLocation!:             WebGLUniformLocation
     private _backgroundStartColorUniformLocation!: WebGLUniformLocation
     private _backgroundEndColorUniformLocation!:   WebGLUniformLocation
@@ -337,7 +337,7 @@ class Renderer extends EventEmitter {
 
             requestAnimationFrame(cb)
         }
-    
+
         this._autoRedraw = value
     }
 
@@ -417,7 +417,7 @@ class Renderer extends EventEmitter {
         this._gl = ctx
 
         try {
-            this._initVertextBuffer()
+            this._initVertexBuffer()
             this._initShaders()
             this._initProgram()
         } catch (error) {
@@ -426,7 +426,7 @@ class Renderer extends EventEmitter {
         }
     }
 
-    private _initVertextBuffer() {
+    private _initVertexBuffer() {
         const buffer = this._gl.createBuffer()
 
         if (buffer == null)
@@ -449,12 +449,12 @@ class Renderer extends EventEmitter {
     }
 
     private _initShaders() {
-        this._initVertextShader()
+        this._initVertexShader()
         this._initFragmentShader()
     }
 
-    private _initVertextShader() {
-        this._vertextShader = this._createShader(this._gl.VERTEX_SHADER,   vertexShaderSource)
+    private _initVertexShader() {
+        this._vertexShader = this._createShader(this._gl.VERTEX_SHADER,   vertexShaderSource)
     }
 
     private _initFragmentShader() {
@@ -462,11 +462,11 @@ class Renderer extends EventEmitter {
 
         this._fragmentShader = this._createShader(this._gl.FRAGMENT_SHADER, code)
     }
-    
+
     private _initProgram() {
         const oldProgram = this._program
 
-        this._program = this._createProgram(this._vertextShader!, this._fragmentShader!)
+        this._program = this._createProgram(this._vertexShader!, this._fragmentShader!)
 
         this._gl.useProgram(this._program)
 
@@ -582,9 +582,9 @@ class Renderer extends EventEmitter {
 
     private deleteWebGLObjects() {
         this._gl.deleteProgram(this._program)
-        this._gl.deleteShader(this._vertextShader)
+        this._gl.deleteShader(this._vertexShader)
         this._gl.deleteShader(this._fragmentShader)
-        this._gl.deleteBuffer(this._vertextBuffer)
+        this._gl.deleteBuffer(this._vertexBuffer)
     }
 
     private _resize() {
